@@ -1,6 +1,7 @@
 import React from 'react';
 import type { PotentialMinister } from '../src/types/cabinet';
-import { ministerCandidates } from '../src/store/ministerCandidates';
+import { generateCandidates, ministerCandidates } from '../src/store/ministerCandidates';
+import { PRESET_PARTIES } from '../src/store/gameState';
 
 interface Props {
   presidentParty: string;
@@ -8,7 +9,18 @@ interface Props {
 }
 
 export const PrimeMinisterSelector: React.FC<Props> = ({ presidentParty, onSelect }) => {
-  const candidates = ministerCandidates
+  const partySeats = PRESET_PARTIES.reduce((acc, party) => {
+    acc[party.id] = party.seatsInParliament;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const baseIdeology =
+    PRESET_PARTIES.find(p => p.id === presidentParty)?.initialStats.presidentProfile ||
+    { liberal: 50, autoritaire: 50, ecolo: 50, social: 50, souverainiste: 50 };
+
+  const generated = generateCandidates(partySeats, baseIdeology);
+
+  const candidates = [...generated, ...ministerCandidates]
     .filter((c: PotentialMinister) => c.competence >= 70)
     .sort((a: PotentialMinister, b: PotentialMinister) => b.competence - a.competence);
 
