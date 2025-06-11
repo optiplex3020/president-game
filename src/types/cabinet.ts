@@ -1,7 +1,11 @@
 export interface Minister {
   id: string;
   name: string;
-  role: string;
+  /**
+   * A minister may hold several portfolios simultaneously.
+   * Each entry in this array is a role identifier from CABINET_ROLES.
+   */
+  roles: string[];
   party: string;
   loyalty: number;
   competence: number;

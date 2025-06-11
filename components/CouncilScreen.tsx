@@ -25,7 +25,7 @@ const CouncilScreen: React.FC = () => {
           <div key={roleId} className="minister-card">
             <div className="minister-header">
               <h3>{minister.name}</h3>
-              <span className="minister-role">{minister.role}</span>
+              <span className="minister-role">{minister.roles.join(', ')}</span>
             </div>
 
             <div className="minister-stats">
