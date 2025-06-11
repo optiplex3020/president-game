@@ -60,6 +60,8 @@ export function generateCandidates(
         name: randomName(),
         party,
         popularity: 30 + Math.random() * 40,
+        experience: Math.floor(Math.random() * 30),
+        reputation: Math.floor(40 + Math.random() * 60),
         competence,
         ideology: {
           liberal: ideology.liberal + (Math.random() * 20 - 10),

@@ -11,7 +11,7 @@ interface CabinetFormationState {
   availableCandidates: PotentialMinister[];
   maxPartyMinistersAllowed: Record<string, number>;
   presidentParty: string;
-  initializeFormation: (presidentParty: string, parliamentSeats: Record<string, number>) => void;
+  initializeFormation: (presidentParty: string, parliamentSeats: Record<string, number>, primeMinister?: PotentialMinister) => void;
   appointMinister: (role: string, candidate: PotentialMinister) => Promise<{ risks: string[] }>;
 }
 
@@ -22,7 +22,7 @@ export const useCabinetFormationStore = create<CabinetFormationState>((set, get)
   maxPartyMinistersAllowed: {},
   presidentParty: '',
 
-  initializeFormation: (presidentParty, parliamentSeats) => {
+  initializeFormation: (presidentParty, parliamentSeats, primeMinister) => {
     const maxMinisters = Math.floor(Object.values(parliamentSeats).reduce((sum, seats) => sum + seats, 0) * 0.15);
     const partyAllocations: Record<string, number> = {};
     
@@ -34,12 +34,23 @@ export const useCabinetFormationStore = create<CabinetFormationState>((set, get)
     // Générer les candidats initiaux à partir du générateur commun
     const initialCandidates = generateCandidates(presidentParty, parliamentSeats);
     
+    const selectedMinisters: Record<string, PotentialMinister> = {};
+    const ministerRoles: Record<string, string[]> = {};
+
+    let available = initialCandidates;
+
+    if (primeMinister) {
+      selectedMinisters['premier-ministre'] = primeMinister;
+      ministerRoles[primeMinister.id] = ['premier-ministre'];
+      available = initialCandidates.filter(c => c.id !== primeMinister.id);
+    }
+
     set({
       presidentParty,
       maxPartyMinistersAllowed: partyAllocations,
-      availableCandidates: initialCandidates, // Ajout des candidats à l'état
-      ministerRoles: {},
-      selectedMinisters: {}
+      availableCandidates: available,
+      ministerRoles,
+      selectedMinisters
     });
   },
 

@@ -11,5 +11,13 @@ export interface PotentialMinister {
   id: string;
   name: string;
   party: string;
-  // ... autres propriétés
+  experience: number;
+  reputation: number;
+  competence: number;
+  personality: {
+    loyalty: number;
+    ambition: number;
+    charisma: number;
+    stubbornness: number;
+  };
 }

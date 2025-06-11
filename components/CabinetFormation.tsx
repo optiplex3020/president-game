@@ -74,29 +74,18 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
     setCurrentRisks([]);
   };
 
-  // Ajouter console.log pour déboguer
-  console.log('Available candidates:', availableCandidates);
-  console.log('Filtered candidates:', filteredCandidates);
-  console.log('Selected role:', selectedRole);
-
-  const debugInfo = process.env.NODE_ENV === 'development' && (
-    <div style={{ margin: '1rem', padding: '1rem', background: '#f5f5f5' }}>
-      <p>Nombre total de candidats: {availableCandidates.length}</p>
-      <p>Candidats filtrés: {filteredCandidates.length}</p>
-      <p>Rôle sélectionné: {selectedRole}</p>
-      <p>Quotas par parti: {JSON.stringify(maxPartyMinistersAllowed)}</p>
-    </div>
+  const rolesToDisplay = CABINET_ROLES.filter(
+    r => !(r.id === 'premier-ministre' && selectedMinisters['premier-ministre'])
   );
 
   return (
     <div className="cabinet-formation">
-      {debugInfo}
       <h2>Formation du Gouvernement</h2>
 
       <div className="roles-section">
         <h3>Postes ministériels</h3>
         <div className="role-grid">
-          {CABINET_ROLES.map(role => (
+          {rolesToDisplay.map(role => (
             <button
               key={role.id}
               onClick={() => setSelectedRole(role.id)}
@@ -128,7 +117,7 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
                     <div className="stat">
                       <span>Compétence</span>
                       <div className="stat-bar">
-                        <div 
+                        <div
                           className="stat-fill"
                           style={{width: `${candidate.competence}%`}}
                         />
@@ -137,9 +126,18 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
                     <div className="stat">
                       <span>Loyauté</span>
                       <div className="stat-bar">
-                        <div 
+                        <div
                           className="stat-fill"
                           style={{width: `${candidate.personality.loyalty}%`}}
+                        />
+                      </div>
+                    </div>
+                    <div className="stat">
+                      <span>Réputation</span>
+                      <div className="stat-bar">
+                        <div
+                          className="stat-fill"
+                          style={{width: `${candidate.reputation}%`}}
                         />
                       </div>
                     </div>
@@ -151,6 +149,7 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
                     {candidate.personality.ambition > 80 && (
                       <span className="trait warning">Ambitieux</span>
                     )}
+                    <span className="trait">{candidate.experience} ans d'expérience</span>
                   </div>
                 </button>
               ))}
