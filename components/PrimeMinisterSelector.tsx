@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { PotentialMinister } from '../src/types/cabinet';
-import { ministerCandidates } from '../src/store/ministerCandidates';
+import { generateCandidates } from '../src/utils/candidateGenerator';
+import { PRESET_PARTIES } from '../src/store/gameState';
+
+const SEAT_DISTRIBUTION: Record<string, number> = PRESET_PARTIES.reduce(
+  (acc, p) => {
+    acc[p.id] = p.seatsInParliament;
+    return acc;
+  },
+  {} as Record<string, number>
+);
 
 interface Props {
   presidentParty: string;
@@ -8,9 +17,12 @@ interface Props {
 }
 
 export const PrimeMinisterSelector: React.FC<Props> = ({ presidentParty, onSelect }) => {
-  const candidates = ministerCandidates
-    .filter((c: PotentialMinister) => c.competence >= 70)
-    .sort((a: PotentialMinister, b: PotentialMinister) => b.competence - a.competence);
+  const candidates = useMemo(() => {
+    const pool = generateCandidates(presidentParty, SEAT_DISTRIBUTION, { primeMinister: true });
+    return pool
+      .filter((c: PotentialMinister) => c.competence >= 70)
+      .sort((a, b) => b.competence - a.competence);
+  }, [presidentParty]);
 
   return (
     <div className="prime-minister-selector">
