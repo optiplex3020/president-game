@@ -1,0 +1,83 @@
+.parliament-view {
+  background: var(--bg-primary);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.parliament-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.coalition-support {
+  background: var(--bg-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-weight: 500;
+}
+
+.parliament-parties {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.party-card {
+  background: var(--bg-secondary);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.party-card.in-coalition {
+  border-color: var(--primary);
+}
+
+.party-name {
+  margin-bottom: 1rem;
+}
+
+.party-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.ideology-bar {
+  margin-bottom: 0.5rem;
+}
+
+.bar {
+  position: relative;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  margin-top: 0.25rem;
+}
+
+.fill {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: 50%;
+  top: -2px;
+  transform: translateX(-50%);
+}
+
+.current-law {
+  background: var(--bg-secondary);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.law-status {
+  margin-top: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}

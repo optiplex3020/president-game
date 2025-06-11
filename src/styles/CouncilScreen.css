@@ -1,0 +1,121 @@
+.council-screen {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.council-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.council-header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #1e293b, #334155);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.council-date {
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.minister-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.minister-card {
+  background: #f8fafc;
+  border-radius: 15px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.minister-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.minister-header {
+  margin-bottom: 1.5rem;
+}
+
+.minister-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.minister-role {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.minister-stats {
+  margin-bottom: 1.5rem;
+}
+
+.stat {
+  margin-bottom: 1rem;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.375rem;
+}
+
+.stat-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.minister-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-replace,
+.btn-assign {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-replace {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-replace:hover {
+  background: #dc2626;
+}
+
+.btn-assign {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-assign:hover {
+  background: #2563eb;
+}

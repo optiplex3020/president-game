@@ -1,0 +1,120 @@
+.economy-screen {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.economy-header {
+  margin-bottom: 2rem;
+}
+
+.main-indicators {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.indicator {
+  background: #f8fafc;
+  border-radius: 15px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.indicator-label {
+  display: block;
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.indicator-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.indicator-value.positive { color: #10b981; }
+.indicator-value.warning { color: #f59e0b; }
+.indicator-value.negative { color: #ef4444; }
+
+.budget-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.income-section,
+.expenses-section {
+  background: #f8fafc;
+  border-radius: 15px;
+  padding: 1.5rem;
+}
+
+.budget-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.budget-item:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  color: #4b5563;
+  text-transform: capitalize;
+}
+
+.item-amount {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.economic-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-reform,
+.btn-stimulus,
+.btn-austerity {
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.btn-reform {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-reform:hover {
+  background: #2563eb;
+}
+
+.btn-stimulus {
+  background: #10b981;
+  color: white;
+}
+
+.btn-stimulus:hover {
+  background: #059669;
+}
+
+.btn-austerity {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-austerity:hover {
+  background: #dc2626;
+}

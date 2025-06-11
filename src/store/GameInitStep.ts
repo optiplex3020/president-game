@@ -1,0 +1,1 @@
+export type GameInitStep = 'personal' | 'party' | 'prime-minister' | 'cabinet' | 'confirmation';
