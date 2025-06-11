@@ -27,11 +27,12 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const [showRisks, setShowRisks] = useState(false);
   const [currentRisks, setCurrentRisks] = useState<string[]>([]);
-  const { 
-    availableCandidates, 
+  const {
+    availableCandidates,
     selectedMinisters,
+    ministerRoles,
     maxPartyMinistersAllowed,
-    appointMinister 
+    appointMinister
   } = useCabinetFormationStore();
 
   // Filtrer les candidats disponibles pour le rôle sélectionné
@@ -39,11 +40,16 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
     if (!selectedRole) return [];
     
     return availableCandidates.filter(candidate => {
-      const partyCount = Object.values(selectedMinisters)
-        .filter(m => m.party === candidate.party).length;
+      const partyCount = Object.entries(ministerRoles).reduce((acc, [minId, roles]) => {
+        const m = selectedMinisters[minId];
+        if (m && m.party === candidate.party) {
+          acc += roles.length;
+        }
+        return acc;
+      }, 0);
       return partyCount < (maxPartyMinistersAllowed[candidate.party] || 0);
     });
-  }, [selectedRole, availableCandidates, selectedMinisters, maxPartyMinistersAllowed]);
+  }, [selectedRole, availableCandidates, selectedMinisters, ministerRoles, maxPartyMinistersAllowed]);
 
   const handleCandidateSelect = async (candidate: PotentialMinister) => {
     if (!selectedRole) return;

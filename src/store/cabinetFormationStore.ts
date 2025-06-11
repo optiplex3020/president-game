@@ -4,7 +4,10 @@ import { CABINET_ROLES } from '../data/cabinetRoles';
 import { generateCandidates } from '../utils/candidateGenerator';
 
 interface CabinetFormationState {
+  /** Mapping of role id to selected candidate */
   selectedMinisters: Record<string, PotentialMinister>;
+  /** Map of candidate id to all roles they hold */
+  ministerRoles: Record<string, string[]>;
   availableCandidates: PotentialMinister[];
   maxPartyMinistersAllowed: Record<string, number>;
   presidentParty: string;
@@ -14,6 +17,7 @@ interface CabinetFormationState {
 
 export const useCabinetFormationStore = create<CabinetFormationState>((set, get) => ({
   selectedMinisters: {},
+  ministerRoles: {},
   availableCandidates: [],
   maxPartyMinistersAllowed: {},
   presidentParty: '',
@@ -30,10 +34,12 @@ export const useCabinetFormationStore = create<CabinetFormationState>((set, get)
     // Générer les candidats initiaux à partir du générateur commun
     const initialCandidates = generateCandidates(presidentParty, parliamentSeats);
     
-    set({ 
+    set({
       presidentParty,
       maxPartyMinistersAllowed: partyAllocations,
-      availableCandidates: initialCandidates // Ajout des candidats à l'état
+      availableCandidates: initialCandidates, // Ajout des candidats à l'état
+      ministerRoles: {},
+      selectedMinisters: {}
     });
   },
 
@@ -50,8 +56,13 @@ export const useCabinetFormationStore = create<CabinetFormationState>((set, get)
       risks.push("Compétences insuffisantes pour ce poste");
     }
 
-    const partyCount = Object.values(state.selectedMinisters)
-      .filter(m => m.party === candidate.party).length;
+    const partyCount = Object.entries(state.ministerRoles).reduce((acc, [minId, roles]) => {
+      const m = state.selectedMinisters[minId];
+      if (m && m.party === candidate.party) {
+        acc += roles.length;
+      }
+      return acc;
+    }, 0);
       
     if (partyCount >= state.maxPartyMinistersAllowed[candidate.party]) {
       risks.push("Quota de ministres dépassé pour ce parti");
@@ -61,6 +72,10 @@ export const useCabinetFormationStore = create<CabinetFormationState>((set, get)
       selectedMinisters: {
         ...state.selectedMinisters,
         [role]: candidate
+      },
+      ministerRoles: {
+        ...state.ministerRoles,
+        [candidate.id]: [...(state.ministerRoles[candidate.id] || []), role]
       }
     }));
 
