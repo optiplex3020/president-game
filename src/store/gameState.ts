@@ -485,12 +485,24 @@ export const useGameState = create<GameState>((set, get) => ({
       const newStats = { ...state.playerStats };
       
       // Impact sur la popularité
-      newStats.popularity += (minister.popularity - 50) * 0.1;
-      
+      newStats.popularity += (minister.popularity - 50) * 0.1 + (minister.reputation - 50) * 0.05;
+
       // Impact sur la stabilité selon la loyauté
       if (minister.personality?.loyalty) {
         newStats.stability += (minister.personality.loyalty - 50) * 0.1;
       }
+
+      // Expérience du ministre
+      if (minister.experience) {
+        newStats.stability += minister.experience * 0.02;
+      }
+
+      // Effets spéciaux
+      Object.entries(minister.specialEffects || {}).forEach(([key, val]) => {
+        if (newStats[key] !== undefined) {
+          newStats[key] += val;
+        }
+      });
       
       // Impact spécifique au rôle (simplifié)
       const roleImpact = 0.1 * minister.competence;

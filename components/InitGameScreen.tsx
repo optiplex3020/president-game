@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useGameState } from '../src/store/gameState';
 import { useCabinetFormationStore } from '../src/store/cabinetFormationStore';
-import type { GameInitStep, PoliticalParty, PotentialMinister } from '../src/types/game';
+import { getSeatDistribution } from '../src/utils/seatDistribution';
+import type { GameInitStep, PoliticalParty } from '../src/types/game';
+import type { PotentialMinister } from '../src/types/cabinet';
 import { PartySelector } from './PartySelector';
 import { PrimeMinisterSelector } from './PrimeMinisterSelector';
 import { CabinetFormation } from './CabinetFormation';
@@ -40,7 +42,8 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
 
   const handlePrimeMinisterSelect = (minister: PotentialMinister) => {
     if (playerInfo.party) {
-      initializeFormation(playerInfo.party.id, { [minister.party]: 100 });
+      const seats = getSeatDistribution();
+      initializeFormation(playerInfo.party.id, seats, minister);
       setStep('cabinet');
     }
   };

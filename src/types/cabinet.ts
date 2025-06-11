@@ -108,6 +108,8 @@ export interface PotentialMinister {
     charisma: number;
     stubbornness: number;
   };
+  experience: number;
+  reputation: number;
   background: string[];
   preferredRoles?: string[];
   specialEffects: Record<string, number>;
