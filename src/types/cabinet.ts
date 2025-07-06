@@ -36,22 +36,6 @@ export interface Minister {
   status: 'active' | 'dismissed' | 'resigned';
 }
 
-interface MinisterCandidate {
-  id: string;
-  name: string;
-  party: string;
-  competence: number;
-  personality: {
-    loyalty: number;
-    ambition: number;
-    charisma: number;
-    stubbornness: number;
-  };
-  traits: string[];
-  background: string;
-  specialEffects: Record<string, number>;
-}
-
 export interface MinisterMission {
   id: string;
   title: string;
