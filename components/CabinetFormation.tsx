@@ -4,21 +4,6 @@ import { useCabinetFormationStore } from '../src/store/cabinetFormationStore';
 import type { PotentialMinister } from '../src/types/cabinet';
 import '../src/styles/CabinetFormation.css';
 
-interface MinisterCandidate {
-  id: string;
-  name: string;
-  party: string;
-  competence: number;
-  personality: {
-    loyalty: number;
-    ambition: number;
-    charisma: number;
-    stubbornness: number;
-  };
-  background: string;
-  specialEffects: Record<string, number>;
-}
-
 interface CabinetFormationProps {
   onComplete: () => void;
 }

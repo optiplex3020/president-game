@@ -7,17 +7,4 @@ export interface PoliticalParty {
   seats: number;
 }
 
-export interface PotentialMinister {
-  id: string;
-  name: string;
-  party: string;
-  experience: number;
-  reputation: number;
-  competence: number;
-  personality: {
-    loyalty: number;
-    ambition: number;
-    charisma: number;
-    stubbornness: number;
-  };
-}
+export type { PotentialMinister } from './cabinet';
