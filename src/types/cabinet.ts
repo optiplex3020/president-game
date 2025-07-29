@@ -23,7 +23,7 @@ export interface Minister {
     charisma: number;
     stubbornness: number;
   };
-  background: string;
+  background: string[];
   preferredRoles: string[];
   specialEffects: Record<string, number>;
   missions?: Array<{
@@ -36,20 +36,31 @@ export interface Minister {
   status: 'active' | 'dismissed' | 'resigned';
 }
 
-interface MinisterCandidate {
+export interface PotentialMinister {
   id: string;
   name: string;
   party: string;
   competence: number;
+  popularity: number;
+  ideology: {
+    liberal: number;
+    autoritaire: number;
+    ecolo: number;
+    social: number;
+    souverainiste: number;
+  };
   personality: {
     loyalty: number;
     ambition: number;
     charisma: number;
     stubbornness: number;
   };
-  traits: string[];
-  background: string;
+  experience: number;
+  reputation: number;
+  background: string[];
+  preferredRoles?: string[];
   specialEffects: Record<string, number>;
+  traits: string[];
 }
 
 export interface MinisterMission {
@@ -87,32 +98,6 @@ export interface CabinetState {
   availableCandidates: Minister[];
   maxPartyMinistersAllowed: Record<string, number>;
   presidentParty: string;
-}
-
-export interface PotentialMinister {
-  id: string;
-  name: string;
-  party: string;
-  competence: number;
-  popularity: number;
-  ideology: {
-    liberal: number;
-    autoritaire: number;
-    ecolo: number;
-    social: number;
-    souverainiste: number;
-  };
-  personality: {
-    loyalty: number;
-    ambition: number;
-    charisma: number;
-    stubbornness: number;
-  };
-  experience: number;
-  reputation: number;
-  background: string[];
-  preferredRoles?: string[];
-  specialEffects: Record<string, number>;
 }
 
 export const CABINET_ROLES = {
