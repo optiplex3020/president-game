@@ -28,7 +28,7 @@ export const useCabinetFormationStore = create<CabinetFormationState>((set, get)
     
     Object.entries(parliamentSeats).forEach(([party, seats]) => {
       const ratio = seats / 577;
-      partyAllocations[party] = Math.round(maxMinisters * ratio);
+      partyAllocations[party] = Math.max(Math.round(maxMinisters * ratio), 3); // Minimum 3 par parti
     });
     
     // Générer les candidats initiaux à partir du générateur commun

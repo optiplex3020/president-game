@@ -1,29 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { CABINET_ROLES } from '../src/data/cabinetRoles';
 import { useCabinetFormationStore } from '../src/store/cabinetFormationStore';
 import type { PotentialMinister } from '../src/types/cabinet';
 import '../src/styles/CabinetFormation.css';
 
-interface MinisterCandidate {
-  id: string;
-  name: string;
-  party: string;
-  competence: number;
-  personality: {
-    loyalty: number;
-    ambition: number;
-    charisma: number;
-    stubbornness: number;
-  };
-  background: string;
-  specialEffects: Record<string, number>;
-}
-
 interface CabinetFormationProps {
   onComplete: () => void;
 }
 
-export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }) => {
+export const CabinetFormation: React.FC<CabinetFormationProps> = () => {
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const [showRisks, setShowRisks] = useState(false);
   const [currentRisks, setCurrentRisks] = useState<string[]>([]);
@@ -34,12 +19,19 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
     maxPartyMinistersAllowed,
     appointMinister
   } = useCabinetFormationStore();
+  
+  // Debug logs
+  console.log('CabinetFormation render:', {
+    availableCandidates: availableCandidates.length,
+    selectedRole,
+    maxPartyMinistersAllowed
+  });
 
   // Filtrer les candidats disponibles pour le rôle sélectionné
   const filteredCandidates = useMemo(() => {
     if (!selectedRole) return [];
     
-    return availableCandidates.filter(candidate => {
+    const filtered = availableCandidates.filter(candidate => {
       const partyCount = Object.entries(ministerRoles).reduce((acc, [minId, roles]) => {
         const m = selectedMinisters[minId];
         if (m && m.party === candidate.party) {
@@ -47,8 +39,16 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
         }
         return acc;
       }, 0);
-      return partyCount < (maxPartyMinistersAllowed[candidate.party] || 0);
+      const maxAllowed = maxPartyMinistersAllowed[candidate.party] || 0;
+      const canAppoint = partyCount < maxAllowed;
+      
+      console.log(`Filter check - ${candidate.name} (${candidate.party}): count=${partyCount}, max=${maxAllowed}, allowed=${canAppoint}`);
+      
+      return canAppoint;
     });
+    
+    console.log(`Filtered ${availableCandidates.length} -> ${filtered.length} candidates for role ${selectedRole}`);
+    return filtered;
   }, [selectedRole, availableCandidates, selectedMinisters, ministerRoles, maxPartyMinistersAllowed]);
 
   const handleCandidateSelect = async (candidate: PotentialMinister) => {
@@ -77,6 +77,8 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
   const rolesToDisplay = CABINET_ROLES.filter(
     r => !(r.id === 'premier-ministre' && selectedMinisters['premier-ministre'])
   );
+  
+  console.log('Cabinet roles to display:', rolesToDisplay.length);
 
   return (
     <div className="cabinet-formation">
@@ -103,6 +105,9 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
       {selectedRole && (
         <div className="candidates-section">
           <h3>Candidats disponibles pour {CABINET_ROLES.find(r => r.id === selectedRole)?.title}</h3>
+          <p className="debug-info">
+            Total candidats: {availableCandidates.length} | Filtrés: {filteredCandidates.length}
+          </p>
           {filteredCandidates.length > 0 ? (
             <div className="candidates-grid">
               {filteredCandidates.map(candidate => (
@@ -150,6 +155,9 @@ export const CabinetFormation: React.FC<CabinetFormationProps> = ({ onComplete }
                       <span className="trait warning">Ambitieux</span>
                     )}
                     <span className="trait">{candidate.experience} ans d'expérience</span>
+                    {candidate.traits && candidate.traits.map(trait => (
+                      <span key={trait} className="trait">{trait}</span>
+                    ))}
                   </div>
                 </button>
               ))}

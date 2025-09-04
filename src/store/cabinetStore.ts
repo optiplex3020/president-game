@@ -10,28 +10,13 @@ interface CabinetState {
   missions: MinisterMission[];
   assignMission: (roleId: string, missionId: string) => void;
   replaceMinister: (roleId: string, newMinisterId: string) => void;
-  updateMissionProgress: (roleId: string, missionId: string) => void;
-  evaluateMissionResults: (roleId: string, missionId: string) => void;
+  updateMissionProgress: () => void;
+  evaluateMissionResults: () => void;
 }
 
 export const useCabinetStore = create<CabinetState>((set, get) => ({
-  ministers: {
-    'premier-ministre': {
-      id: 'pm1',
-      name: 'Gabriel Attal',
-      roles: ['premier-ministre'],
-      loyalty: 85,
-      competence: 75,
-      popularity: 65,
-      party: 'lrem',
-      specialEffects: { stability: 5 },
-      status: 'active'
-    },
-    // ... autres ministres
-  },
-  ministerRoles: {
-    'pm1': ['premier-ministre']
-  },
+  ministers: {},
+  ministerRoles: {},
 
   availableCandidates: [],
   missions: [],
@@ -87,5 +72,13 @@ export const useCabinetStore = create<CabinetState>((set, get) => ({
         availableCandidates: state.availableCandidates.filter(c => c.id !== newMinisterId)
       };
     });
+  },
+  
+  updateMissionProgress: () => {
+    // Implementation placeholder
+  },
+  
+  evaluateMissionResults: () => {
+    // Implementation placeholder  
   }
 }));

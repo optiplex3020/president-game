@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useCabinetStore } from '../src/store/cabinetStore';
-import type { Minister, MinisterMission } from '../src/types/cabinet';
 import '../src/styles/CouncilScreen.css';
 import { MissionAssignmentModal } from './modals/MissionAssignment';
 import { MinisterReplacementModal } from './modals/MinisterReplacement';
 const CouncilScreen: React.FC = () => {
-  const { ministers, missions, assignMission, replaceMinister } = useCabinetStore();
+  const { ministers } = useCabinetStore();
   const [selectedMinister, setSelectedMinister] = useState<string | null>(null);
   const [showMissionModal, setShowMissionModal] = useState(false);
 
-  const handleAssignMission = (ministerId: string, missionId: string) => {
-    assignMission(ministerId, missionId);
-    setShowMissionModal(false);
-  };
 
   return (
     <div className="council-screen">

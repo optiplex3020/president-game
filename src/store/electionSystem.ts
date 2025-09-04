@@ -1,4 +1,4 @@
-type Campaign = {
+export type Campaign = {
   budget: number;
   strategies: Array<{
     type: string;

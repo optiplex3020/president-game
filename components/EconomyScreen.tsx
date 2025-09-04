@@ -1,5 +1,3 @@
-import React from 'react';
-import { useGameState } from '../src/store/gameState';
 import '../src/styles/EconomyScreen.css';
 
 const EconomyScreen: React.FC = () => {

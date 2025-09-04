@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameState } from '../src/store/gameState';
 import { useParliamentStore } from '../src/store/parliamentStore';
 import type { Law } from '../src/types/laws';
@@ -6,7 +5,7 @@ import '../src/styles/ParliamentScreen.css';
 
 const ParliamentScreen: React.FC = () => {
   const { party } = useGameState();
-  const { parties, currentLaw, proposeLaw } = useParliamentStore();
+  const { proposeLaw } = useParliamentStore();
 
   const pendingLaws: Law[] = [
     {

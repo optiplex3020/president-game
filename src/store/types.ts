@@ -1,4 +1,3 @@
-export * from './cabinet';
-export * from './party';
-export * from './parliament';
-export * from './game';
+export * from '../types/cabinet';
+export * from '../types/party';
+export * from '../types/game';

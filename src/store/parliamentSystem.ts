@@ -1,16 +1,6 @@
 import { create } from 'zustand';
 
-export type PoliticalParty = {
-  id: string;
-  name: string;
-  seats: number;
-  ideology: {
-    economic: number;    // -100 (gauche) à 100 (droite)
-    social: number;      // -100 (conservateur) à 100 (progressiste)
-  };
-  support: number;       // 0-100
-  inCoalition: boolean;
-};
+import type { PoliticalParty } from '../types/party';
 
 export type Law = {
   id: string;
@@ -24,24 +14,15 @@ export type Law = {
 };
 
 interface ParliamentState {
-  parties: Array<{
-    id: string;
-    name: string;
-    seats: number;
-    ideology: {
-      economic: number;
-      social: number;
-    };
-    support: number;
-    inCoalition: boolean;
-  }>;
+  parties: PoliticalParty[];
   currentLaw: Law | null;
   coalitionSupport: number;
   totalSeats: number;
   proposeLaw: (law: Omit<Law, 'id' | 'status'>) => void;
   negotiateSupport: (partyId: string) => void;
   updatePartySupport: (partyId: string, change: number) => void;
-  startVote: (lawId: string) => void;
+  updateCoalitionSupport: () => void;
+  startVote: () => void;
   processVoteResults: () => void;
 }
 
@@ -50,12 +31,16 @@ export const useParliamentStore = create<ParliamentState>((set, get) => ({
     {
       id: 'majorite',
       name: 'Majorité Présidentielle',
+      description: 'Coalition gouvernementale',
+      initialStats: { playerStats: {}, foreignRelations: {}, presidentProfile: {} },
+      seatsInParliament: 250,
+      formerPresidents: 0,
+      formerPrimeMinisters: 0,
       seats: 250,
-      ideology: { economic: 20, social: 30 },
+      ideology: { liberal: 20, autoritaire: 0, ecolo: 30, social: 30, souverainiste: 0 },
       support: 100,
       inCoalition: true
     },
-    // ... autres partis
   ],
   currentLaw: null,
   coalitionSupport: 0,
@@ -90,7 +75,7 @@ export const useParliamentStore = create<ParliamentState>((set, get) => ({
     set(state => ({
       parties: state.parties.map(p =>
         p.id === partyId
-          ? { ...p, support: Math.max(0, Math.min(100, p.support + change)) }
+          ? { ...p, support: Math.max(0, Math.min(100, (p.support || 0) + change)) }
           : p
       )
     }));
@@ -100,7 +85,15 @@ export const useParliamentStore = create<ParliamentState>((set, get) => ({
     const parties = get().parties;
     const support = parties
       .filter(p => p.inCoalition)
-      .reduce((sum, p) => sum + p.seats, 0);
+      .reduce((sum, p) => sum + (p.seats || 0), 0);
     set({ coalitionSupport: support });
+  },
+
+  startVote: () => {
+    // Implementation placeholder
+  },
+
+  processVoteResults: () => {
+    // Implementation placeholder
   }
 }));

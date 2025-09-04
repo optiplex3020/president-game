@@ -1,4 +1,4 @@
-import type { Minister } from '../types/cabinet';
+// Utility functions for generating minister data
 
 export function generateBackground(): string[] {
   const possibleBackgrounds = [

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useGameState, PRESET_PARTIES, type PoliticalParty } from '../src/store/gameState';
+import { useState } from 'react';
+import { PRESET_PARTIES } from '../src/store/gameState';
+import type { PoliticalParty } from '../src/types/party';
 import '../src/styles/PartySelector.css';
 
 interface PartySelectorProps {

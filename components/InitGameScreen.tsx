@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useGameState } from '../src/store/gameState';
 import { useCabinetFormationStore } from '../src/store/cabinetFormationStore';
 import { getSeatDistribution } from '../src/utils/seatDistribution';
-import type { GameInitStep, PoliticalParty } from '../src/types/game';
+import type { GameInitStep } from '../src/types/game';
+import type { PoliticalParty } from '../src/types/party';
 import type { PotentialMinister } from '../src/types/cabinet';
 import { PartySelector } from './PartySelector';
 import { PrimeMinisterSelector } from './PrimeMinisterSelector';
-import { CabinetFormation } from './CabinetFormation';
-import '../src/styles/InitGameScreen.css';
+import { CabinetFormationModern } from './CabinetFormationModern';
+import '../src/styles/InitGameScreenModern.css';
 
 export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
   const [step, setStep] = useState<GameInitStep>('personal');
@@ -156,7 +157,7 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
           )}
 
           {step === 'cabinet' && (
-            <CabinetFormation onComplete={handleCabinetComplete} />
+            <CabinetFormationModern onComplete={handleCabinetComplete} />
           )}
 
           {step === 'confirmation' && (

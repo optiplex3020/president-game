@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import eventsData from '../../data/events.json';
-import type { PotentialMinister, CabinetRole } from '../types/cabinet';
+import type { PotentialMinister } from '../types/cabinet';
 import { CABINET_ROLES } from '../types/cabinet';
+import type { PoliticalParty } from '../types/party';
 
 export type Option = {
   text: string;
@@ -16,20 +17,6 @@ export type GameEvent = {
   conditions?: Record<string, { min?: number; max?: number }>;
   probability?: number;
   triggered_by?: number[];
-};
-
-export type PoliticalParty = {
-  id: string;
-  name: string;
-  description: string;
-  initialStats: {
-    playerStats: Partial<Record<string, number>>;
-    foreignRelations: Partial<Record<string, number>>;
-    presidentProfile: Partial<Record<string, number>>;
-  };
-  seatsInParliament: number;
-  formerPresidents: number;
-  formerPrimeMinisters: number;
 };
 
 export const PRESET_PARTIES: PoliticalParty[] = [

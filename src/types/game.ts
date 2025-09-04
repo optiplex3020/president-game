@@ -1,23 +1,7 @@
 export type GameInitStep = 'personal' | 'party' | 'prime-minister' | 'cabinet' | 'confirmation';
 
-export interface PoliticalParty {
-  id: string;
-  name: string;
-  color: string;
-  seats: number;
-}
+// PoliticalParty type moved to src/types/party.ts
+export type { PoliticalParty } from './party';
 
-export interface PotentialMinister {
-  id: string;
-  name: string;
-  party: string;
-  experience: number;
-  reputation: number;
-  competence: number;
-  personality: {
-    loyalty: number;
-    ambition: number;
-    charisma: number;
-    stubbornness: number;
-  };
-}
+// PotentialMinister type moved to src/types/cabinet.ts
+export type { PotentialMinister } from './cabinet';
