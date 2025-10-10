@@ -1,37 +1,12 @@
-
-
 [
   {
     "id": 1,
     "description": "Une grève nationale perturbe les transports. Les syndicats exigent une revalorisation salariale immédiate.",
     "image": "images/greve_syndicale.png",
     "options": [
-      {
-        "text": "Négocier avec les syndicats",
-        "effects": {
-          "syndicats": 10,
-          "popularity": 5,
-          "budget": -10,
-          "cgt": 15
-        }
-      },
-      {
-        "text": "Ignorer la grève",
-        "effects": {
-          "syndicats": -15,
-          "popularity": -10,
-          "stability": -5
-        }
-      },
-      {
-        "text": "Réprimer la mobilisation",
-        "effects": {
-          "syndicats": -20,
-          "popularity": -15,
-          "stability": 10,
-          "medias": -5
-        }
-      }
+      { "text": "Négocier avec les syndicats", "effects": { "syndicats": 10, "popularity": 5, "budget": -10, "cgt": 15 } },
+      { "text": "Ignorer la grève", "effects": { "syndicats": -15, "popularity": -10, "stability": -5 } },
+      { "text": "Réprimer la mobilisation", "effects": { "syndicats": -20, "popularity": -15, "stability": 10, "medias": -5 } }
     ]
   },
   {
@@ -39,22 +14,8 @@
     "description": "Un sommet européen extraordinaire est convoqué sur la crise énergétique.",
     "image": "images/sommet_ue.png",
     "options": [
-      {
-        "text": "Proposer un plan commun européen",
-        "effects": {
-          "ue": 10,
-          "budget": -5,
-          "popularity": 3
-        }
-      },
-      {
-        "text": "Refuser toute coordination",
-        "effects": {
-          "ue": -10,
-          "souverainiste": 10,
-          "relations": -5
-        }
-      }
+      { "text": "Proposer un plan commun européen", "effects": { "popularity": 3, "budget": -5, "relations": 3 } },
+      { "text": "Refuser toute coordination", "effects": { "popularity": -2, "relations": -5 } }
     ]
   },
   {
@@ -62,443 +23,97 @@
     "description": "Des violences policières font la une. La presse internationale s’en empare.",
     "image": "images/police_violence.png",
     "options": [
-      {
-        "text": "Ouvrir une enquête indépendante",
-        "effects": {
-          "medias": 10,
-          "popularity": 5,
-          "stability": -5
-        }
-      },
-      {
-        "text": "Soutenir publiquement la police",
-        "effects": {
-          "stability": 10,
-          "medias": -15,
-          "popularity": -5
-        }
-      }
+      { "text": "Ouvrir une enquête indépendante", "effects": { "medias": 10, "popularity": 5, "stability": -5 } },
+      { "text": "Soutenir publiquement la police", "effects": { "stability": 10, "medias": -15, "popularity": -5 } }
     ]
   },
-  [
-    {
-        "id": 1,
-        "description": "Une hausse des taxes sur les carburants déclenche des manifestations à Paris et en région.",
-        "image": "images/manifestation.avif",
-        "options": [
-            {
-                "text": "Réduire les taxes",
-                "effects": {"budget": -10, "popularity": 5, "stability": 5, "syndicats": 10, "entreprises": -5}
-            },
-            {
-                "text": "Envoyer la police",
-                "effects": {"budget": 5, "stability": -10, "popularity": -5, "syndicats": -15, "medias": -10}
-            },
-            {
-                "text": "Organiser un grand débat",
-                "effects": {"budget": -5, "popularity": 0, "stability": 0, "syndicats": 5, "medias": 5}
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "description": "Une canicule record frappe la France, causant des pénuries d’eau.",
-        "image": "images/canicule.png",
-        "options": [
-            {
-                "text": "Déclarer l’état d’urgence",
-                "effects": {"budget": -10, "stability": 5, "popularity": 0, "ecologistes": 5}
-            },
-            {
-                "text": "Investir dans des infrastructures",
-                "effects": {"budget": -15, "popularity": 10, "stability": 0, "ecologistes": 15, "entreprises": -5}
-            },
-            {
-                "text": "Minimiser la crise",
-                "effects": {"popularity": -15, "stability": -10, "budget": 0, "ecologistes": -10, "medias": -10}
-            }
-        ]
-    },
-    {
-        "id": 3,
-        "description": "Une cyberattaque paralyse les services publics (hôpitaux, transports).",
-        "image": "images/cyberattaque.png",
-        "options": [
-            {
-                "text": "Payer la rançon",
-                "effects": {"budget": -10, "stability": 5, "popularity": -5, "medias": -15}
-            },
-            {
-                "text": "Renforcer la cybersécurité",
-                "effects": {"budget": -15, "relations": 5, "popularity": 0, "entreprises": 10}
-            },
-            {
-                "text": "Accuser un pays étranger",
-                "effects": {"relations": -15, "popularity": 5, "stability": -5, "medias": 5}
-            }
-        ]
-    },
-    {
-        "id": 4,
-        "description": "Les syndicats appellent à une grève générale suite à une réforme des retraites impopulaire.",
-        "conditions": {"syndicats": {"max": 30}},
-        "image": "images/greve.png",
-        "options": [
-            {
-                "text": "Annuler la réforme",
-                "effects": {"budget": -10, "popularity": 10, "syndicats": 20, "entreprises": -15}
-            },
-            {
-                "text": "Maintenir la réforme",
-                "effects": {"budget": 10, "popularity": -15, "stability": -10, "syndicats": -20, "entreprises": 10}
-            },
-            {
-                "text": "Négocier avec les syndicats",
-                "effects": {"budget": -5, "popularity": 5, "syndicats": 10, "stability": 5}
-            }
-        ]
-    },
-    {
-        "id": 5,
-        "description": "Un scandale éclate : les médias révèlent des écoutes illégales par le gouvernement.",
-        "conditions": {"medias": {"max": 30}},
-        "image": "images/scandale.png",
-        "options": [
-            {
-                "text": "Présenter des excuses",
-                "effects": {"popularity": -10, "medias": 15, "stability": 5}
-            },
-            {
-                "text": "Démentir les accusations",
-                "effects": {"popularity": -5, "medias": -10, "stability": -10}
-            },
-            {
-                "text": "Réformer les lois sur la vie privée",
-                "effects": {"budget": -10, "popularity": 5, "medias": 10, "ecologistes": 5}
-            }
-        ]
-    }
-    ,
-    {
-        "id": 6,
-        "description": "Un ralentissement économique mondial provoque une récession en France.",
-        "image": "images/crise_economique.png",
-        "options": [
-            {
-                "text": "Lancer un plan de relance massif",
-                "effects": {"budget": -20, "popularité": 5, "entreprises": 5, "écologistes": -3, "relations": -2}
-            },
-            {
-                "text": "Imposer une cure d’austérité",
-                "effects": {"budget": 15, "popularité": -8, "stabilité": -5, "entreprises": -2, "relations": 3}
-            },
-            {
-                "text": "Ne rien faire et attendre un rebond",
-                "effects": {"budget": 0, "popularité": -3, "stabilité": -2, "médias": -2}
-            }
-        ]
-    },
-    {
-        "id": 7,
-        "description": "Un scandale de corruption éclabousse un ministre de premier plan.",
-        "image": "images/corruption.png",
-        "options": [
-            {
-                "text": "Limoger le ministre et saisir la justice",
-                "effects": {"popularité": 4, "stabilité": 2, "médias": 5, "relations": 1}
-            },
-            {
-                "text": "Soutenir publiquement le ministre",
-                "effects": {"popularité": -10, "médias": -6, "stabilité": -3, "relations": -2}
-            },
-            {
-                "text": "Nommer une commission indépendante",
-                "effects": {"popularité": -2, "médias": 1, "stabilité": 0, "syndicats": 1}
-            }
-        ]
-    },
-    {
-        "id": 8,
-        "description": "Une canicule historique met à rude épreuve les infrastructures et les hôpitaux.",
-        "image": "images/canicule.png",
-        "options": [
-            {
-                "text": "Déclencher un plan national d’urgence",
-                "effects": {"stabilité": 4, "popularité": 3, "budget": -5, "écologistes": 1}
-            },
-            {
-                "text": "Laisser les collectivités gérer seules",
-                "effects": {"budget": 0, "popularité": -5, "écologistes": -3, "médias": -2}
-            }
-        ]
-    },
-    {
-        "id": 9,
-        "description": "Une cyberattaque majeure touche les hôpitaux et le réseau électrique.",
-        "image": "images/cyberattaque.png",
-        "options": [
-            {
-                "text": "Accuser publiquement un État ennemi",
-                "effects": {"relations": -5, "stabilité": 2, "médias": 1}
-            },
-            {
-                "text": "Renforcer la cybersécurité sans désigner de coupable",
-                "effects": {"budget": -5, "relations": 0, "stabilité": 1, "entreprises": 1, "médias": 2}
-            },
-            {
-                "text": "Minimiser l’incident publiquement",
-                "effects": {"stabilité": 0, "popularité": -3, "médias": -4}
-            }
-        ]
-    },
-    {
-        "id": 10,
-        "description": "Une crise migratoire en Méditerranée force la France à réagir à l’afflux de réfugiés.",
-        "image": "images/crise_migrants.png",
-        "options": [
-            {
-                "text": "Accueillir une part substantielle et plaider pour une répartition européenne",
-                "effects": {"relations": 5, "popularité": -4, "écologistes": 2, "stabilité": -1, "médias": 3}
-            },
-            {
-                "text": "Refuser l’accueil et renforcer les frontières",
-                "effects": {"relations": -4, "popularité": 3, "stabilité": 2, "médias": -2}
-            },
-            {
-                "text": "Créer des centres d’asile dans des pays tiers",
-                "effects": {"relations": -1, "popularité": -1, "stabilité": 1, "médias": 1}
-            }
-        ]
-    }
-],
+  {
+    "id": 4,
+    "description": "Hausse des taxes sur les carburants : manifestations à Paris et en région.",
+    "image": "images/manifestation.avif",
+    "options": [
+      { "text": "Réduire les taxes", "effects": { "budget": -10, "popularity": 5, "stability": 5, "syndicats": 10, "entreprises": -5 } },
+      { "text": "Envoyer la police", "effects": { "budget": 5, "stability": -10, "popularity": -5, "syndicats": -15, "medias": -10 } },
+      { "text": "Organiser un grand débat", "effects": { "budget": -5, "popularity": 0, "stability": 0, "syndicats": 5, "medias": 5 } }
+    ]
+  },
+  {
+    "id": 5,
+    "description": "Une canicule record frappe la France, causant des pénuries d’eau.",
+    "image": "images/canicule.png",
+    "options": [
+      { "text": "Déclarer l’état d’urgence", "effects": { "budget": -10, "stability": 5, "popularity": 0, "ecologistes": 5 } },
+      { "text": "Investir dans des infrastructures", "effects": { "budget": -15, "popularity": 10, "stability": 0, "ecologistes": 15, "entreprises": -5 } },
+      { "text": "Minimiser la crise", "effects": { "popularity": -15, "stability": -10, "medias": -10 } }
+    ]
+  },
+  {
+    "id": 6,
+    "description": "Une cyberattaque paralyse les services publics (hôpitaux, transports).",
+    "image": "images/cyberattaque.png",
+    "options": [
+      { "text": "Payer la rançon", "effects": { "budget": -10, "stability": 5, "popularity": -5, "medias": -15 } },
+      { "text": "Renforcer la cybersécurité", "effects": { "budget": -15, "popularity": 0, "entreprises": 10 } },
+      { "text": "Accuser un pays étranger", "effects": { "relations": -15, "popularity": 5, "stability": -5, "medias": 5 } }
+    ]
+  },
+  {
+    "id": 7,
+    "description": "Réforme des retraites impopulaire : les syndicats appellent à une grève générale.",
+    "image": "images/greve.png",
+    "options": [
+      { "text": "Annuler la réforme", "effects": { "budget": -10, "popularity": 10, "syndicats": 20, "entreprises": -15 } },
+      { "text": "Maintenir la réforme", "effects": { "budget": 10, "popularity": -15, "stability": -10, "syndicats": -20, "entreprises": 10 } },
+      { "text": "Négocier avec les syndicats", "effects": { "budget": -5, "popularity": 5, "syndicats": 10, "stability": 5 } }
+    ]
+  },
+  {
+    "id": 8,
+    "description": "Scandale : des écoutes illégales gouvernementales sont révélées par les médias.",
+    "image": "images/scandale.png",
+    "options": [
+      { "text": "Présenter des excuses", "effects": { "popularity": -10, "medias": 15, "stability": 5 } },
+      { "text": "Démentir les accusations", "effects": { "popularity": -5, "medias": -10, "stability": -10 } },
+      { "text": "Réformer les lois sur la vie privée", "effects": { "budget": -10, "popularity": 5, "medias": 10, "ecologistes": 5 } }
+    ]
+  },
+  {
+    "id": 9,
+    "description": "Ralentissement économique mondial : la France entre en récession.",
+    "image": "images/crise_economique.png",
+    "options": [
+      { "text": "Lancer un plan de relance", "effects": { "budget": -20, "popularity": 5, "entreprises": 5 } },
+      { "text": "Cure d’austérité", "effects": { "budget": 15, "popularity": -8, "stability": -5 } },
+      { "text": "Attendre un rebond", "effects": { "popularity": -3, "stability": -2, "medias": -2 } }
+    ]
+  },
+  {
+    "id": 10,
+    "description": "Un ministre clé est éclaboussé par un scandale de corruption.",
+    "image": "images/corruption.png",
+    "options": [
+      { "text": "Limoger et saisir la justice", "effects": { "popularity": 4, "stability": 2, "medias": 5 } },
+      { "text": "Soutenir publiquement", "effects": { "popularity": -10, "medias": -6, "stability": -3 } },
+      { "text": "Nommer une commission", "effects": { "popularity": -2, "medias": 1 } }
+    ]
+  },
   {
     "id": 11,
-    "description": "Une épidémie de grippe aviaire touche le pays, menaçant l'industrie avicole.",
-    "image": "images/grippe_aviaire.png",
+    "description": "Crise migratoire en Méditerranée : décisions attendues.",
+    "image": "images/crise_migrants.png",
     "options": [
-      {
-        "text": "Mettre en place des mesures de prévention strictes",
-        "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Laisser les producteurs gérer la situation",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
+      { "text": "Accueillir et plaider l’UE", "effects": { "popularity": -4, "stability": -1, "medias": 3 } },
+      { "text": "Refuser et renforcer les frontières", "effects": { "popularity": 3, "stability": 2, "medias": -2 } },
+      { "text": "Centres d’asile tiers", "effects": { "popularity": -1, "stability": 1, "medias": 1 } }
     ]
   },
   {
     "id": 12,
-    "description": "Une grève des transports parisiens perturbe la capitale.",
-    "image": "images/greve_transports.png",
-    "options": [
-      {
-        "text": "Négocier avec les syndicats",
-        "effects": {"budget": -5, "popularity": 5, "stability": 0, "medias": 2}
-      },
-      {
-        "text": "Envoyer la police",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      },
-      {
-        "text": "Proposer une augmentation de salaire",
-        "effects": {"budget": -10, "popularity": 10, "stability": 5, "medias": 5}
-      }
-    ]
-  },
-  {
-    "id": 13,
-    "description": "Une tempête ravage le littoral français, causant des dégâts importants.",
-    "image": "images/tempete.png",
-    "options": [
-      {
-        "text": "Déclarer l'état d'urgence",
-        "effects": {"budget": -20, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Laisser les collectivités gérer la situation",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
-    ]
-  },
-  {
-    "id": 14,
-    "description": "Une crise de l'eau touche plusieurs régions, entraînant des restrictions.",
+    "description": "Crise de l’eau dans plusieurs régions : restrictions nécessaires.",
     "image": "images/crise_eau.png",
     "options": [
-      {
-        "text": "Mettre en place des restrictions d'eau",
-        "effects": {"budget": -5, "popularity": 0, "stability": 0, "medias": 2}
-      },
-      {
-        "text": "Investir dans des infrastructures",
-        "effects": {"budget": -20, "popularity": 5, "stability": 2, "medias": 3}
-      }
+      { "text": "Restrictions d’eau", "effects": { "budget": -5, "popularity": 0, "stability": 0, "medias": 2 } },
+      { "text": "Investir dans les infrastructures", "effects": { "budget": -20, "popularity": 5, "stability": 2, "medias": 3 } }
     ]
-  },
-  {
-    "id": 15,
-    "description": "Une crise alimentaire mondiale provoque des pénuries en France.",
-    "image": "images/crise_alimentaire.png",
-    "options": [
-      {
-        "text": "Réguler les prix des denrées alimentaires",
-        "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Laisser le marché s'ajuster",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
-    ]
-  },
-  {
-    "id": 16,
-    "description": "Une crise diplomatique éclate avec un pays voisin suite à des tensions frontalières.",
-    "image": "images/crise_diplomatique.png",
-    "options": [
-      {
-        "text": "Proposer des négociations",
-        "effects": {"budget": -5, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Renforcer les frontières",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
-    ]
-  },
-  {
-    "id": 17,
-    "description": "Une crise de la santé publique éclate suite à une épidémie de grippe.",
-    "image": "images/crise_sante.png",
-    "options": [
-      {
-        "text": "Mettre en place un plan de vaccination",
-        "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Minimiser la crise",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
-    ]
-  },
-  {
-    "id": 18,
-    "description": "Une crise de l'énergie éclate suite à une pénurie de gaz.",
-"image": "images/crise_energie.png",    
-    "options": [
-      {
-        "text": "Proposer des aides aux ménages",
-        "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Augmenter les prix de l'énergie",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
-    ]
-  },
-
-{
-    "id": 19,
-    "description": "Une crise de la sécurité éclate suite à une série d'attentats.",
-    "image": "images/crise_securite.png",
-    "options": [
-      {
-        "text": "Renforcer les mesures de sécurité",
-        "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Minimiser la menace",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
-    ]
-  },
-{
-    "id": 20,
-    "description": "Une crise de la justice éclate suite à des révélations sur des abus policiers.",
-    "image": "images/crise_justice.png",
-    "options": [
-      {
-        "text": "Ouvrir une enquête indépendante",
-        "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Soutenir les forces de l'ordre",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
-    ]
-  },
-{
-    "id": 21,
-    "description": "Une crise de la culture éclate suite à des coupes budgétaires dans le secteur.",
-    "image": "images/crise_culture.png",
-    "options": [
-      {
-        "text": "Augmenter le budget de la culture",
-        "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Réduire les subventions",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
-    ]
-  },
-{
-    "id": 22,
-    "description": "Une crise de l'éducation éclate suite à des grèves dans les écoles.",
-    "image": "images/crise_education.png",
-    "options": [
-      {
-        "text": "Négocier avec les syndicats",
-        "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-      },
-      {
-        "text": "Ignorer les revendications",
-        "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-      }
-    ]
-  },
-    {
-        "id": 23,
-        "description": "Une crise de la santé mentale éclate suite à une augmentation des cas de dépression.",
-        "image": "images/crise_sante_mentale.png",
-        "options": [
-        {
-            "text": "Augmenter le budget de la santé mentale",
-            "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-        },
-        {
-            "text": "Minimiser la crise",
-            "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-        }
-        ]
-    },
-    {
-        "id": 24,
-        "description": "Une crise de la biodiversité éclate suite à des révélations sur la destruction d'habitats naturels.",
-        "image": "images/crise_biodiversite.png",   
-        "options": [
-        {
-            "text": "Mettre en place des mesures de protection",
-            "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-        },
-        {
-            "text": "Ignorer la crise",
-            "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-        }
-        ]
-    },
-    {
-        "id": 25,
-        "description": "Une crise de la démocratie éclate suite à des accusations de fraude électorale.",
-        "image": "images/crise_democratie.png",
-        "options": [
-        {
-            "text": "Ouvrir une enquête indépendante",
-            "effects": {"budget": -10, "popularity": 5, "stability": 0, "medias": 3}
-        },
-        {
-            "text": "Minimiser les accusations",
-            "effects": {"budget": 0, "popularity": -5, "stability": -2, "medias": -3}
-        }
-        ]
-    }
+  }
 ]

@@ -1,33 +1,29 @@
-import { useState } from 'react';
-import { useCabinetFormationStore } from '../src/store/cabinetFormationStore';
-import { getSeatDistribution } from '../src/utils/seatDistribution';
-import type { GameInitStep } from '../src/types/game';
-import type { PoliticalParty } from '../src/types/party';
-import type { PotentialMinister } from '../src/types/cabinet';
-import { PartySelector } from './PartySelector';
-import { PrimeMinisterSelectorAdvanced } from './PrimeMinisterSelectorAdvanced';
-import { CabinetFormationRealistic } from './CabinetFormationRealistic';
-import { ErrorBoundary } from './ErrorBoundary';
+import React, { useState } from 'react';
 import '../src/styles/InitGameScreenModern.css';
 
 export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
-  const [step, setStep] = useState<GameInitStep>('personal');
+  const [step, setStep] = useState<'personal' | 'party' | 'confirmation'>('personal');
   const [playerInfo, setPlayerInfo] = useState({
     firstName: '',
     lastName: '',
     age: 30,
     previousRole: '',
-    party: null as PoliticalParty | null
+    party: 'Renaissance' // Parti par défaut
   });
-
-  const { initializeFormation } = useCabinetFormationStore();
 
   const steps = [
     { id: 'personal', name: 'Informations' },
     { id: 'party', name: 'Parti' },
-    { id: 'prime-minister', name: 'Premier Ministre' },
-    { id: 'cabinet', name: 'Gouvernement' },
     { id: 'confirmation', name: 'Confirmation' }
+  ];
+
+  const parties = [
+    { id: 'renaissance', name: 'Renaissance', description: 'Centrisme européen et libéral' },
+    { id: 'rn', name: 'Rassemblement National', description: 'Nationalisme et souveraineté' },
+    { id: 'lfi', name: 'La France Insoumise', description: 'Gauche populaire et écologique' },
+    { id: 'lr', name: 'Les Républicains', description: 'Droite traditionnelle' },
+    { id: 'ps', name: 'Parti Socialiste', description: 'Social-démocratie' },
+    { id: 'eelv', name: 'Europe Écologie Les Verts', description: 'Écologie politique' }
   ];
 
   const handlePersonalSubmit = (e: React.FormEvent) => {
@@ -35,21 +31,14 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
     setStep('party');
   };
 
-  const handlePartySelect = (party: PoliticalParty) => {
-    setPlayerInfo(prev => ({ ...prev, party }));
-    setStep('prime-minister');
-  };
-
-  const handlePrimeMinisterSelect = (minister: PotentialMinister) => {
-    if (playerInfo.party) {
-      const seats = getSeatDistribution();
-      initializeFormation(playerInfo.party.id, seats, minister);
-      setStep('cabinet');
-    }
-  };
-
-  const handleCabinetComplete = () => {
+  const handlePartySelect = (partyId: string) => {
+    setPlayerInfo(prev => ({ ...prev, party: partyId }));
     setStep('confirmation');
+  };
+
+  const handleFinalConfirmation = () => {
+    console.log('Jeu initialisé avec:', playerInfo);
+    onComplete();
   };
 
   return (
@@ -124,6 +113,7 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
                       ...prev, 
                       previousRole: e.target.value 
                     }))}
+                    required
                   >
                     <option value="">Sélectionnez une fonction</option>
                     <option value="minister">Ministre</option>
@@ -131,6 +121,7 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
                     <option value="mayor">Maire</option>
                     <option value="businessman">Chef d'entreprise</option>
                     <option value="teacher">Professeur</option>
+                    <option value="lawyer">Avocat</option>
                   </select>
                 </div>
               </div>
@@ -145,28 +136,67 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
           )}
 
           {step === 'party' && (
-            <PartySelector onSelect={handlePartySelect} />
-          )}
-
-          {step === 'prime-minister' && playerInfo.party && (
-            <PrimeMinisterSelectorAdvanced 
-              presidentParty={playerInfo.party.id}
-              onSelect={handlePrimeMinisterSelect}
-            />
-          )}
-
-          {step === 'cabinet' && (
-            <ErrorBoundary>
-              <CabinetFormationRealistic onComplete={handleCabinetComplete} />
-            </ErrorBoundary>
+            <div className="party-selection">
+              <h2>Choisissez votre parti politique</h2>
+              <div className="parties-grid">
+                {parties.map(party => (
+                  <div 
+                    key={party.id}
+                    className="party-card"
+                    onClick={() => handlePartySelect(party.id)}
+                  >
+                    <h3>{party.name}</h3>
+                    <p>{party.description}</p>
+                    <div className="party-select-btn">
+                      Choisir ce parti
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
 
           {step === 'confirmation' && (
             <div className="confirmation-section">
               <h2>Résumé de vos choix</h2>
-              {/* ... affichage du résumé ... */}
-              <button onClick={onComplete} className="btn-start">
-                Commencer le mandat
+              
+              <div className="summary-card">
+                <div className="summary-item">
+                  <strong>Nom :</strong> {playerInfo.firstName} {playerInfo.lastName}
+                </div>
+                <div className="summary-item">
+                  <strong>Âge :</strong> {playerInfo.age} ans
+                </div>
+                <div className="summary-item">
+                  <strong>Fonction précédente :</strong> {
+                    playerInfo.previousRole === 'minister' ? 'Ministre' :
+                    playerInfo.previousRole === 'deputy' ? 'Député' :
+                    playerInfo.previousRole === 'mayor' ? 'Maire' :
+                    playerInfo.previousRole === 'businessman' ? 'Chef d\'entreprise' :
+                    playerInfo.previousRole === 'teacher' ? 'Professeur' :
+                    playerInfo.previousRole === 'lawyer' ? 'Avocat' :
+                    playerInfo.previousRole
+                  }
+                </div>
+                <div className="summary-item">
+                  <strong>Parti :</strong> {parties.find(p => p.id === playerInfo.party)?.name}
+                </div>
+              </div>
+
+              <div className="game-preview">
+                <h3>🎮 Prêt à gouverner ?</h3>
+                <p>Vous allez diriger la France avec :</p>
+                <ul>
+                  <li>⚡ <strong>Événements politiques</strong> réalistes à gérer</li>
+                  <li>📊 <strong>Indicateurs</strong> de popularité et économiques</li>
+                  <li>🏛️ <strong>Agenda présidentiel</strong> complet</li>
+                  <li>⚖️ <strong>Décisions</strong> aux conséquences réelles</li>
+                  <li>📈 <strong>Capital politique</strong> à gérer stratégiquement</li>
+                </ul>
+              </div>
+
+              <button onClick={handleFinalConfirmation} className="btn-start">
+                Commencer le mandat présidentiel
               </button>
             </div>
           )}

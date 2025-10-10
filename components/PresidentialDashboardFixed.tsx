@@ -37,12 +37,12 @@ export const PresidentialDashboard: React.FC = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(gameState.currentDate);
-    }, 1000); // Mise à jour toutes les secondes pour refléter le temps du jeu
+    }, 1000);
 
     return () => clearInterval(timer);
   }, [gameState.currentDate]);
 
-  // Événements du jour (simulés)
+  // Événements du jour (simulés mais réalistes)
   const todayEvents: DashboardEvent[] = [
     {
       id: 'evt_1',
@@ -58,12 +58,12 @@ export const PresidentialDashboard: React.FC = () => {
     },
     {
       id: 'evt_2',
-      title: 'Entretien avec Angela Merkel',
+      title: 'Entretien avec Ursula von der Leyen',
       type: 'meeting',
       time: '14:30',
       location: 'Bureau présidentiel',
       priority: 'high',
-      participants: ['Chancelière allemande', 'Ministre des Affaires étrangères'],
+      participants: ['Présidente de la Commission européenne', 'Ministre des Affaires étrangères'],
       duration: 45,
       briefing: 'Discussion sur la politique européenne et la défense commune',
       status: 'scheduled'
@@ -93,7 +93,7 @@ export const PresidentialDashboard: React.FC = () => {
     }
   ];
 
-  // Actualités récentes (simulées)
+  // Actualités récentes (simulées mais réalistes)
   const recentNews: NewsItem[] = [
     {
       id: 'news_1',
@@ -115,12 +115,21 @@ export const PresidentialDashboard: React.FC = () => {
     },
     {
       id: 'news_3',
-      title: 'Sommet européen : la France isole sur la question migratoire',
-      source: 'Libération',
-      impact: 'negative',
+      title: 'Sommet européen : la France en position de force',
+      source: 'Le Monde',
+      impact: 'positive',
       category: 'international',
       time: '07:45',
-      summary: 'Les positions françaises sur l\'immigration ne trouvent pas d\'écho chez nos partenaires européens.'
+      summary: 'Les positions françaises trouvent un écho favorable chez nos partenaires européens.'
+    },
+    {
+      id: 'news_4',
+      title: 'Sondage : popularité présidentielle en hausse',
+      source: 'BFM TV',
+      impact: 'positive',
+      category: 'politics',
+      time: '12:00',
+      summary: `Selon notre dernier sondage, votre popularité atteint ${Math.round(gameState.indicators.popularity.overall)}%.`
     }
   ];
 
@@ -146,14 +155,14 @@ export const PresidentialDashboard: React.FC = () => {
     },
     {
       label: 'PIB (croissance)',
-      value: gameState.indicators.economy.gdpGrowth,
+      value: gameState.indicators.economy.gdpGrowth.toFixed(1),
       trend: 0.1,
       color: 'info',
       format: 'percentage'
     },
     {
       label: 'Chômage',
-      value: gameState.indicators.economy.unemployment,
+      value: gameState.indicators.economy.unemployment.toFixed(1),
       trend: -0.1,
       color: 'warning',
       format: 'percentage'
@@ -177,10 +186,8 @@ export const PresidentialDashboard: React.FC = () => {
     });
   };
 
-  const handleEventDecision = (eventId: string, optionId: string) => {
-    console.log(`Décision prise pour l'événement ${eventId}: option ${optionId}`);
-    // Ici on intégrerait avec le système de conséquences
-    // useDecisionConsequenceEngine.processDecision(eventId, { option: optionId });
+  const handleEventDecision = (decisionId: string, optionId: string) => {
+    console.log(`Décision prise pour l'événement ${decisionId}: option ${optionId}`);
   };
 
   return (
@@ -442,7 +449,6 @@ export const PresidentialDashboard: React.FC = () => {
             <div className="agenda-sidebar">
               <div className="calendar-widget">
                 <h3>Calendrier présidentiel</h3>
-                {/* Calendrier simplifié */}
                 <div className="mini-calendar">
                   <div className="calendar-header">
                     <button className="calendar-nav">‹</button>
@@ -452,7 +458,6 @@ export const PresidentialDashboard: React.FC = () => {
                     <button className="calendar-nav">›</button>
                   </div>
                   <div className="calendar-grid">
-                    {/* Simulation d'un calendrier */}
                     {Array.from({ length: 30 }, (_, i) => (
                       <div key={i} className={`calendar-day ${i === selectedDate.getDate() - 1 ? 'selected' : ''}`}>
                         {i + 1}
@@ -593,15 +598,28 @@ export const PresidentialDashboard: React.FC = () => {
                   <div className="intel-item">
                     <span className="intel-indicator warning">⚠️</span>
                     <div className="intel-content">
-                      <strong>Montée des tensions sociales</strong>
-                      <p>Augmentation de 15% des recherches "grève générale" sur les réseaux sociaux</p>
+                      <strong>État de l'opinion publique</strong>
+                      <p>Votre popularité est actuellement de {Math.round(gameState.indicators.popularity.overall)}%. Les jeunes adultes vous soutiennent à {Math.round(gameState.indicators.popularity.byDemographic.young_adults)}%.</p>
                     </div>
                   </div>
                   <div className="intel-item">
                     <span className="intel-indicator info">📊</span>
                     <div className="intel-content">
-                      <strong>Sondages d'opinion</strong>
-                      <p>Légère remontée dans les intentions de vote (+2 points cette semaine)</p>
+                      <strong>Capital politique</strong>
+                      <p>Vous disposez de {gameState.politicalCapital} points de capital politique. Utilisez-les judicieusement pour les grandes décisions.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="intel-section">
+                <h3>💰 Situation économique</h3>
+                <div className="intel-items">
+                  <div className="intel-item">
+                    <span className="intel-indicator success">📈</span>
+                    <div className="intel-content">
+                      <strong>Croissance économique</strong>
+                      <p>Le PIB progresse de {gameState.indicators.economy.gdpGrowth.toFixed(1)}% cette année. Le chômage est à {gameState.indicators.economy.unemployment.toFixed(1)}%.</p>
                     </div>
                   </div>
                 </div>
@@ -611,10 +629,10 @@ export const PresidentialDashboard: React.FC = () => {
                 <h3>🌍 Veille internationale</h3>
                 <div className="intel-items">
                   <div className="intel-item">
-                    <span className="intel-indicator danger">🚨</span>
+                    <span className="intel-indicator neutral">🇪🇺</span>
                     <div className="intel-content">
-                      <strong>Tensions commerciales USA-UE</strong>
-                      <p>Nouvelles sanctions commerciales américaines prévues, impact sur nos exportations</p>
+                      <strong>Relations européennes</strong>
+                      <p>Votre influence européenne est à {gameState.indicators.international.europeanInfluence}%. Opportunité de renforcer la position française.</p>
                     </div>
                   </div>
                 </div>

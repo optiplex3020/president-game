@@ -1,0 +1,1270 @@
+/* Cabinet Formation Ultra - Next-Gen Government Building Interface */
+@import url('./modern-system.css');
+
+.cabinet-formation-ultra {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  color: white;
+  font-family: var(--font-family-sans);
+}
+
+/* En-tête gouvernemental */
+.formation-header {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  padding: var(--space-8) var(--space-10);
+  border-bottom: 3px solid #3b82f6;
+  position: relative;
+  overflow: hidden;
+}
+
+.formation-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M40 40c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm20 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.government-title h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0 0 var(--space-2) 0;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.government-title .subtitle {
+  font-size: var(--text-xl);
+  opacity: 0.9;
+  margin: 0;
+  font-weight: 300;
+}
+
+/* Indicateur de progression circulaire */
+.formation-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.progress-circle {
+  position: relative;
+}
+
+.progress-ring {
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+
+.progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.progress-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.progress-label {
+  font-size: var(--text-sm);
+  opacity: 0.8;
+}
+
+.formation-stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.stat-item {
+  text-align: center;
+  padding: var(--space-4) var(--space-6);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: var(--text-sm);
+  opacity: 0.8;
+  margin-top: var(--space-1);
+}
+
+/* Contenu principal */
+.formation-content {
+  padding: var(--space-8);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Vue d'ensemble du gouvernement */
+.government-overview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.overview-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cabinet-filters {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.filter-btn {
+  padding: var(--space-3) var(--space-6);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.government-composition h3 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin: 0 0 var(--space-4) 0;
+  color: white;
+}
+
+.composition-charts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.chart-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.chart-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.parity-bar {
+  display: flex;
+  height: 24px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.parity-section.men {
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.parity-section.women {
+  background: linear-gradient(90deg, #ec4899 0%, #db2777 100%);
+}
+
+.parity-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Grille des rôles ministériels */
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: var(--space-6);
+}
+
+.role-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.role-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.role-card.filled {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.role-card.vacant {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.02);
+}
+
+/* Catégories de postes */
+.role-card.sovereign { border-left: 4px solid #dc2626; }
+.role-card.economic { border-left: 4px solid #f59e0b; }
+.role-card.social { border-left: 4px solid #3b82f6; }
+.role-card.territorial { border-left: 4px solid #22c55e; }
+
+.role-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.priority-badge {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.priority-badge.critical {
+  background: rgba(220, 38, 38, 0.2);
+  color: #fca5a5;
+}
+
+.priority-badge.high {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+}
+
+.priority-badge.medium {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+}
+
+.role-complexity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.complexity-bar {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.complexity-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e 0%, #f59e0b 50%, #ef4444 100%);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+.complexity-value {
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.7);
+  min-width: 35px;
+}
+
+.role-title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  margin: 0 0 var(--space-3) 0;
+  color: white;
+}
+
+.role-description {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  margin: 0 0 var(--space-6) 0;
+}
+
+/* Ministre assigné */
+.assigned-minister {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: rgba(34, 197, 94, 0.1);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.minister-avatar {
+  position: relative;
+}
+
+.avatar-circle {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: var(--text-base);
+  letter-spacing: 0.05em;
+}
+
+.party-indicator {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+}
+
+.party-indicator.renaissance { background: #3b82f6; }
+.party-indicator.lr { background: #0ea5e9; }
+.party-indicator.ps { background: #f97316; }
+.party-indicator.eelv { background: #22c55e; }
+
+.minister-info {
+  flex: 1;
+}
+
+.minister-name {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: white;
+  margin: 0 0 var(--space-1) 0;
+}
+
+.minister-party {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--space-2);
+}
+
+.minister-metrics {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.metric {
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.change-minister-btn {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.change-minister-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: white;
+}
+
+/* Position vacante */
+.vacant-position {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.vacant-icon {
+  width: 48px;
+  height: 48px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.vacant-text {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.required-skills {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.skill-tag {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+/* Actions de completion */
+.completion-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(34, 197, 94, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  border: 2px solid rgba(34, 197, 94, 0.3);
+  margin-top: var(--space-8);
+}
+
+.completion-summary h3 {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: #22c55e;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.completion-summary p {
+  font-size: var(--text-lg);
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.final-stats {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.final-stat {
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.final-stat strong {
+  color: white;
+}
+
+.btn-complete-formation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-10);
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-xl);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
+}
+
+.btn-complete-formation:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(34, 197, 94, 0.4);
+}
+
+.btn-complete-formation svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Sélection des candidats */
+.candidate-selection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.selection-header {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: var(--space-6);
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.back-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.role-context h2 {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: white;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.role-context p {
+  font-size: var(--text-lg);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin: 0 0 var(--space-4) 0;
+}
+
+.required-competencies {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.required-competencies strong {
+  color: white;
+  font-weight: 600;
+}
+
+.competency-tag {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* Contrôles de sélection */
+.selection-controls {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.search-and-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.advanced-search {
+  flex: 1;
+}
+
+.search-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: var(--space-4);
+  width: 20px;
+  height: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--space-4) var(--space-6) var(--space-4) var(--space-12);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  color: white;
+  font-size: var(--text-base);
+  transition: all var(--transition-fast);
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.filter-select {
+  padding: var(--space-3) var(--space-4);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  color: white;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-select option {
+  background: #1e293b;
+  color: white;
+}
+
+/* Contrôles d'affichage */
+.view-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-tabs {
+  display: flex;
+  gap: var(--space-2);
+  background: rgba(255, 255, 255, 0.1);
+  padding: var(--space-1);
+  border-radius: var(--radius-lg);
+}
+
+.view-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.view-tab.active,
+.view-tab:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+.view-tab svg {
+  width: 16px;
+  height: 16px;
+}
+
+.results-info {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+/* Affichage des candidats */
+.candidates-display {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Vue grille */
+.candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--space-6);
+}
+
+.candidate-card-compact {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-fast);
+}
+
+.candidate-card-compact:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.candidate-header {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.candidate-avatar-small {
+  position: relative;
+}
+
+.candidate-avatar-small .avatar-circle {
+  width: 48px;
+  height: 48px;
+  font-size: var(--text-sm);
+}
+
+.party-dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+}
+
+.party-dot.renaissance { background: #3b82f6; }
+.party-dot.lr { background: #0ea5e9; }
+.party-dot.ps { background: #f97316; }
+.party-dot.eelv { background: #22c55e; }
+
+.candidate-basic {
+  flex: 1;
+}
+
+.candidate-name {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: white;
+  margin: 0 0 var(--space-1) 0;
+}
+
+.candidate-current-role {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.candidate-details {
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* Score de pertinence */
+.relevance-score {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.score-label {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
+  min-width: 80px;
+  font-weight: 500;
+}
+
+.score-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e 0%, #f59e0b 50%, #ef4444 100%);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+.score-value {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: white;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Correspondance des compétences */
+.candidate-skills-match {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.skill-match {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.skill-match.matched {
+  background: rgba(34, 197, 94, 0.1);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.skill-match.missing {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Métriques miniatures */
+.candidate-metrics-mini {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.metric-mini {
+  text-align: center;
+}
+
+.metric-mini span {
+  display: block;
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: var(--space-1);
+}
+
+.metric-mini strong {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: white;
+}
+
+/* Boutons de nomination */
+.nominate-btn {
+  width: 100%;
+  padding: var(--space-4) var(--space-6);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+  font-size: var(--text-base);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nominate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+}
+
+/* Vue détaillée */
+.candidates-list-detailed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.candidate-row-detailed {
+  display: flex;
+  gap: var(--space-6);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-fast);
+}
+
+.candidate-row-detailed:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.candidate-left-section {
+  display: flex;
+  gap: var(--space-4);
+  flex: 1;
+}
+
+.candidate-avatar-medium .avatar-circle {
+  width: 64px;
+  height: 64px;
+  font-size: var(--text-base);
+}
+
+.party-indicator-large {
+  background: var(--color-success);
+  color: white;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  margin-top: var(--space-2);
+  display: inline-block;
+}
+
+.party-indicator-large.renaissance { background: #3b82f6; }
+.party-indicator-large.lr { background: #0ea5e9; }
+.party-indicator-large.ps { background: #f97316; }
+.party-indicator-large.eelv { background: #22c55e; }
+
+.candidate-identity {
+  flex: 1;
+}
+
+.candidate-identity .candidate-name {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-2);
+}
+
+.candidate-role {
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.candidate-education {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.candidate-bio-excerpt {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Section du milieu - analyse des compétences */
+.candidate-middle-section {
+  flex: 1;
+  padding: 0 var(--space-4);
+}
+
+.skills-analysis h5 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: white;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.skills-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.skill-item.matched {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.skill-item.missing {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.skill-status {
+  font-size: var(--text-sm);
+}
+
+.skill-name {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.overall-match {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.overall-match strong {
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+/* Section de droite - indicateurs de performance */
+.candidate-right-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 200px;
+}
+
+.performance-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.indicator-label {
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.7);
+  min-width: 70px;
+  font-weight: 500;
+}
+
+.indicator-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.indicator-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+.indicator-fill.competence { background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%); }
+.indicator-fill.loyalty { background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%); }
+.indicator-fill.charisma { background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%); }
+
+.indicator-value {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: white;
+  min-width: 30px;
+  text-align: right;
+}
+
+.nominate-btn-large {
+  padding: var(--space-4) var(--space-8);
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+  font-size: var(--text-base);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nominate-btn-large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+}
+
+/* Pagination */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+}
+
+.pagination-btn {
+  padding: var(--space-4) var(--space-8);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+}
+
+.pagination-btn:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination-info {
+  text-align: center;
+}
+
+.pagination-info span {
+  display: block;
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.results-count {
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: var(--space-1);
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .roles-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  
+  .candidates-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .header-content {
+    flex-direction: column;
+    gap: var(--space-6);
+    text-align: center;
+  }
+  
+  .overview-controls {
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  
+  .completion-actions {
+    flex-direction: column;
+    gap: var(--space-6);
+    text-align: center;
+  }
+  
+  .candidate-row-detailed {
+    flex-direction: column;
+  }
+  
+  .candidate-left-section,
+  .candidate-middle-section,
+  .candidate-right-section {
+    flex: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .formation-content {
+    padding: var(--space-4);
+  }
+  
+  .roles-grid,
+  .candidates-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .view-controls {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .pagination-controls {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .government-title h1 {
+    font-size: 2.5rem;
+  }
+  
+  .formation-stats {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+  
+  .stat-item {
+    padding: var(--space-3);
+  }
+}

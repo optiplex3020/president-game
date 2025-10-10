@@ -26,6 +26,10 @@ export function generateCandidates(
   parties: Record<string, number>,
   options: CandidateGenerationOptions = {}
 ): PotentialMinister[] {
+  console.log('=== GENERATION DES CANDIDATS ===');
+  console.log('presidentParty:', presidentParty);
+  console.log('parties:', parties);
+  console.log('options:', options);
   const {
     primeMinister = false,
     ideology = { liberal: 50, autoritaire: 50, ecolo: 50, social: 50, souverainiste: 50 },
@@ -102,8 +106,11 @@ export function generateCandidates(
     }
   });
 
+  console.log(`Candidats générés avant ajout des tests: ${candidates.length}`);
+  
   // Ajouter quelques candidats de test s'il n'y en a pas assez
   if (candidates.length < 10) {
+    console.log('Ajout des candidats de test car pas assez de candidats générés');
     const testCandidates: PotentialMinister[] = [
       {
         id: 'test-1',
@@ -154,6 +161,9 @@ export function generateCandidates(
     
     candidates.push(...testCandidates);
   }
+  
+  console.log(`Candidats finaux générés: ${candidates.length}`);
+  candidates.forEach(c => console.log(`- ${c.name} (${c.party}) - Compétence: ${c.competence}`));
   
   return shuffleArray(candidates);
 }

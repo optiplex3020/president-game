@@ -1,0 +1,261 @@
+.opinion-map {
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  border-radius: 12px;
+  padding: 24px;
+  color: #ffffff;
+}
+
+.opinion-header {
+  margin-bottom: 32px;
+}
+
+.opinion-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.overall-approval {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.approval-gauge {
+  width: 100%;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.gauge-fill {
+  height: 100%;
+  transition: width 0.5s ease, background-color 0.5s ease;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.approval-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.approval-value {
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffcc00;
+  text-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+}
+
+.approval-label {
+  font-size: 18px;
+  color: #cccccc;
+}
+
+.public-mood {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  align-items: center;
+}
+
+.mood-emoji {
+  font-size: 64px;
+}
+
+.mood-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mood-label {
+  font-size: 12px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mood-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.mood-score {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.mood-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 200px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-label {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.metric-bar {
+  height: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.metric-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.metric-value {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.opinion-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.chart-container {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.chart-wide {
+  grid-column: 1 / -1;
+}
+
+.chart-container h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.dominant-topics {
+  margin-bottom: 32px;
+}
+
+.dominant-topics h3 {
+  font-size: 20px;
+  margin: 0 0 16px 0;
+  color: #ffffff;
+}
+
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.topic-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.topic-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #ffcc00;
+}
+
+.topic-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.topic-volume,
+.topic-sentiment {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sentiment-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.social-demands h3 {
+  font-size: 20px;
+  margin: 0 0 16px 0;
+  color: #ffffff;
+}
+
+.demands-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.demand-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 16px;
+  border-left: 4px solid #ff6b6b;
+}
+
+.demand-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.demand-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.demand-support {
+  font-size: 14px;
+  color: #4ecdc4;
+  font-weight: 600;
+}
+
+.demand-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.demand-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.demand-metric span {
+  font-size: 11px;
+  color: #999;
+}
