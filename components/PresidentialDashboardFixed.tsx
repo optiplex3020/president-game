@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useGameEngine } from '../src/systems/GameEngine';
 import { InteractiveGameSystem } from './InteractiveGameSystem';
+import { SaveGameMenu } from './SaveGameMenu';
+import { useAutoSave } from '../src/hooks/useAutoSave';
 import '../src/styles/PresidentialDashboard.css';
 
 interface DashboardEvent {
@@ -32,6 +34,10 @@ export const PresidentialDashboard: React.FC = () => {
   const [selectedDate] = useState(new Date());
   const [activeTab, setActiveTab] = useState<'overview' | 'agenda' | 'decisions' | 'intelligence' | 'events'>('overview');
   const [newsFilter, setNewsFilter] = useState<'all' | 'politics' | 'economy' | 'social' | 'international'>('all');
+  const [showSaveMenu, setShowSaveMenu] = useState(false);
+
+  // Auto-save toutes les 5 minutes
+  const { saveStatus } = useAutoSave(true);
 
   // Mise à jour du temps en continu
   useEffect(() => {
@@ -191,6 +197,7 @@ export const PresidentialDashboard: React.FC = () => {
   };
 
   return (
+    <>
     <div className="presidential-dashboard">
       {/* En-tête présidentiel */}
       <header className="dashboard-header">
@@ -226,8 +233,35 @@ export const PresidentialDashboard: React.FC = () => {
             ))}
           </div>
           
-          <div className="emergency-button">
-            <button 
+          <div className="header-actions" style={{ display: 'flex', gap: '12px' }}>
+            <button
+              className="save-btn"
+              onClick={() => setShowSaveMenu(true)}
+              title="Sauvegarder / Charger"
+              style={{
+                padding: '10px 16px',
+                background: 'rgba(59, 130, 246, 0.2)',
+                border: '1px solid rgba(59, 130, 246, 0.4)',
+                borderRadius: '8px',
+                color: '#60a5fa',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '14px',
+                fontWeight: '600',
+                transition: 'all 0.2s'
+              }}
+            >
+              <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
+              </svg>
+              {saveStatus === 'saving' && 'Sauvegarde...'}
+              {saveStatus === 'saved' && '✅'}
+              {saveStatus === 'idle' && 'Sauvegarder'}
+            </button>
+
+            <button
               className="crisis-btn"
               onClick={() => {
                 alert('Centre de crise activé ! Toutes les ressources gouvernementales sont mobilisées.');
@@ -641,6 +675,27 @@ export const PresidentialDashboard: React.FC = () => {
           </div>
         )}
       </main>
+
+      {/* Auto-save indicator */}
+      {saveStatus === 'saved' && (
+        <div style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          background: 'rgba(34, 197, 94, 0.9)',
+          color: 'white',
+          padding: '12px 20px',
+          borderRadius: '8px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+          zIndex: 9999,
+          animation: 'fadeIn 0.3s ease'
+        }}>
+          ✅ Partie sauvegardée automatiquement
+        </div>
+      )}
     </div>
+
+    {showSaveMenu && <SaveGameMenu onClose={() => setShowSaveMenu(false)} />}
+    </>
   );
 };

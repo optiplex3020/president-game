@@ -3,6 +3,7 @@
 export type CharacterRole =
   | 'president'
   | 'prime_minister'
+  | 'prime_minister_candidate'
   | 'minister'
   | 'deputy'
   | 'opposition_leader'
@@ -36,6 +37,7 @@ export type PersonalityTrait =
   | 'narcissique' // Centré sur lui-même
   | 'empathique' // Sensible aux autres
   | 'visionnaire' // Pense à long terme
+  | 'strategique' // Navigue avec finesse politique
   | 'conservateur'; // Résiste au changement
 
 export type Motivation =

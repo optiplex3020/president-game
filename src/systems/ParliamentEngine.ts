@@ -503,11 +503,13 @@ export const useParliamentEngine = create<ParliamentEngineState>((set, get) => (
       if (speaker) {
         const governmentParties: PartyId[] = ['renaissance', 'horizons', 'modem'];
         const position = getPartyVoteInstruction(speaker.party, law, governmentParties);
+        const debatePosition: 'pour' | 'contre' | 'ambigu' =
+          position === 'abstention' || position === 'absent' ? 'ambigu' : position;
 
         speakers.push({
           deputy: speaker,
           duration: Math.random() * 10 + 5, // 5-15 minutes
-          position: position === 'abstention' ? 'ambigu' : position,
+          position: debatePosition,
           impact: speaker.influence / 10, // 0-10
           transcript: `Discours de ${speaker.firstName} ${speaker.lastName} (${speaker.party}) sur ${law.title}`
         });

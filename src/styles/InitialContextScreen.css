@@ -1,0 +1,190 @@
+.initial-context-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.initial-context-screen .context-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.initial-context-screen section {
+  background: var(--surface-card, #111623);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.presidential-briefing header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.presidential-briefing header p {
+  margin: 4px 0 0 0;
+  color: var(--text-subtle, #9aa0b5);
+  font-size: 0.9rem;
+}
+
+.briefing-content {
+  display: grid;
+  gap: 16px;
+}
+
+.president-card,
+.prime-minister-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.presidential-title .title-label,
+.prime-minister-card .title-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-subtle, #9aa0b5);
+}
+
+.presidential-title h3 {
+  margin: 6px 0 12px;
+  font-size: 1.25rem;
+}
+
+.president-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.president-details li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.prime-minister-card h3 {
+  margin: 6px 0 10px;
+}
+
+.prime-minister-card p {
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  color: var(--text-subtle, #9aa0b5);
+}
+
+.prime-minister-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.prime-minister-stats div {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.prime-minister-stats strong {
+  font-size: 1.1rem;
+}
+
+.prime-minister-axes,
+.prime-minister-card .prime-minister-axes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pm-chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(93, 173, 226, 0.12);
+  color: #5dade2;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.media-agenda-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.media-agenda-list li {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 0.85rem;
+}
+
+.agenda-topic {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  text-transform: capitalize;
+}
+
+.agenda-trend {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-subtle, #9aa0b5);
+  font-size: 0.75rem;
+}
+
+.key-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+}
+
+.stat-card strong {
+  font-size: 1.2rem;
+}
+
+.context-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.context-actions .btn-primary {
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: var(--accent-primary, #5563f9);
+  border: none;
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.context-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(85, 99, 249, 0.35);
+}

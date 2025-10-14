@@ -1,0 +1,140 @@
+.opinion-preview {
+  background: var(--surface-card, #131722);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.opinion-preview .opinion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.opinion-preview .opinion-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.opinion-preview .public-mood {
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: capitalize;
+}
+
+.public-mood.pessimiste {
+  background: rgba(255, 99, 132, 0.18);
+  color: #ff7a8c;
+}
+
+.public-mood.optimiste {
+  background: rgba(88, 214, 141, 0.18);
+  color: #58d68d;
+}
+
+.opinion-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.opinion-column h4 {
+  margin: 0 0 10px 0;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-subtle, #9aa0b5);
+}
+
+.opinion-column ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.opinion-column li {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.segment-name {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.segment-metric {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.segment-metric.positive {
+  color: #58d68d;
+}
+
+.segment-metric.negative {
+  color: #ff7a8c;
+}
+
+.segment-context {
+  font-size: 0.75rem;
+  color: var(--text-subtle, #9aa0b5);
+  margin-top: 6px;
+}
+
+.mood-topics h4 {
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  color: var(--text-subtle, #9aa0b5);
+}
+
+.mood-topics ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mood-topics li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.topic-name {
+  flex: 1;
+  text-transform: capitalize;
+}
+
+.topic-sentiment {
+  font-weight: 600;
+  margin: 0 12px;
+}
+
+.topic-sentiment.positive {
+  color: #58d68d;
+}
+
+.topic-sentiment.negative {
+  color: #ff7a8c;
+}
+
+.topic-volume {
+  font-size: 0.75rem;
+  color: var(--text-subtle, #9aa0b5);
+}

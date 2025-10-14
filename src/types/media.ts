@@ -26,7 +26,7 @@ export interface MediaOutlet {
   type: MediaType;
 
   // Ligne éditoriale
-  editorial Line: {
+  editorialLine: {
     bias: MediaBias;
     quality: number; // 0-100: qualité journalistique
     sensationalism: number; // 0-100: tendance au sensationnalisme

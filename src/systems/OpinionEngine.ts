@@ -452,7 +452,7 @@ function createInitialOpinion(): PoliticalOpinion {
       { category: 'securite', importance: 65 },
       { category: 'sante', importance: 70 }
     ],
-    dominantEmotions: ['inquiet', 'resignation'],
+    dominantEmotions: ['peur', 'resignation'],
     mediaExposure: {
       traditional: 60,
       social: 40,

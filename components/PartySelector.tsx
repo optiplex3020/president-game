@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { PRESET_PARTIES } from '../src/store/gameState';
 import type { PoliticalParty } from '../src/types/party';
 import '../src/styles/PartySelector.css';
+import { useMasterGame } from '../src/context/MasterGameContext';
+import type { PartyId } from '../src/types/parliament';
 
 interface PartySelectorProps {
   onSelect: (party: PoliticalParty) => void;
@@ -20,6 +22,17 @@ export const PartySelector: React.FC<PartySelectorProps> = ({ onSelect }) => {
       souverainiste: 50
     }
   });
+
+  const { parliament, opinion } = useMasterGame();
+
+  const demographics = useMemo(() => Object.values(opinion?.demographics ?? {}), [opinion?.demographics]);
+  const sortedSegments = useMemo(() => demographics.length ? [...demographics].sort((a, b) => b.opinion.trustInPresident - a.opinion.trustInPresident) : [], [demographics]);
+  const supportiveSegments = sortedSegments.slice(0, 2);
+  const criticalSegments = sortedSegments.slice(-2).reverse();
+  const overallApproval = useMemo(() => {
+    if (typeof opinion?.calculateOverallApproval !== 'function') return null;
+    return Math.round(opinion.calculateOverallApproval());
+  }, [opinion, demographics]);
 
   const handleSubmitCustomParty = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,48 +69,107 @@ export const PartySelector: React.FC<PartySelectorProps> = ({ onSelect }) => {
       
       {!isCreatingNew ? (
         <div className="party-grid">
-          {PRESET_PARTIES.map(party => (
-            <button
-              key={party.id}
-              onClick={() => onSelect(party)}
-              className="party-card"
-            >
-              <div className="party-card-content">
-                <h3 className="party-name">{party.name}</h3>
-                <p className="party-description">{party.description}</p>
-                <div className="party-stats">
-                  <div className="party-stat">
-                    <span className="stat-icon">🏛️</span>
-                    <span className="stat-value">{party.seatsInParliament}</span>
-                    <span className="stat-label">Députés</span>
+          {PRESET_PARTIES.map(party => {
+            const partyId = (party.parliamentaryId ?? party.id) as PartyId;
+            const group = parliament?.parliamentaryGroups?.[partyId];
+            const seats = group?.seats ?? party.seatsInParliament;
+            const share = Math.round((seats / 577) * 1000) / 10;
+            const majorityGap = Math.max(0, 289 - seats);
+            const majorityLabel = majorityGap === 0
+              ? 'Majorité absolue'
+              : majorityGap <= 40
+                ? 'Majorité relative'
+                : 'Minorité';
+            const ideologyVector = party.ideologyVector;
+
+            return (
+              <button
+                key={party.id}
+                onClick={() => onSelect(party)}
+                className="party-card"
+              >
+                <div className="party-card-content">
+                  <div className="party-header">
+                    <h3 className="party-name">{party.name}</h3>
+                    <p className="party-description">{party.description}</p>
                   </div>
-                  <div className="party-stat">
-                    <span className="stat-icon">👑</span>
-                    <span className="stat-value">{party.formerPresidents}</span>
-                    <span className="stat-label">Anciens Présidents</span>
-                  </div>
-                  <div className="party-stat">
-                    <span className="stat-icon">🎖️</span>
-                    <span className="stat-value">{party.formerPrimeMinisters}</span>
-                    <span className="stat-label">Anciens Premiers ministres</span>
-                  </div>
-                  <div className="party-ideologies">
-                    {Object.entries(party.initialStats.presidentProfile).map(([key, value]) => (
-                      <div key={key} className="ideology-bar">
-                        <span className="ideology-label">{key}</span>
-                        <div className="ideology-progress">
-                          <div 
-                            className="ideology-fill"
-                            style={{ width: `${value}%` }}
-                          />
-                        </div>
+
+                  <div className="party-majority">
+                    <div className="majority-metrics">
+                      <div>
+                        <span className="stat-label">Sièges projetés</span>
+                        <span className="stat-value">{seats}</span>
                       </div>
-                    ))}
+                      <div>
+                        <span className="stat-label">Part des sièges</span>
+                        <span className="stat-value">{share}%</span>
+                      </div>
+                      <div className={`majority-chip ${majorityGap === 0 ? 'absolute' : majorityGap <= 40 ? 'relative' : 'minority'}`}>
+                        {majorityLabel}
+                      </div>
+                    </div>
+                    {majorityGap > 0 && (
+                      <div className="majority-gap">Manque {majorityGap} voix pour 289</div>
+                    )}
+                  </div>
+
+                  <div className="party-lineage">
+                    <div className="lineage-item">
+                      <span className="stat-icon">👑</span>
+                      <div>
+                        <span className="stat-value">{party.formerPresidents}</span>
+                        <span className="stat-label">Anciens présidents</span>
+                      </div>
+                    </div>
+                    <div className="lineage-item">
+                      <span className="stat-icon">🎖️</span>
+                      <div>
+                        <span className="stat-value">{party.formerPrimeMinisters}</span>
+                        <span className="stat-label">Anciens Premiers ministres</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {ideologyVector && (
+                    <div className="party-ideology-vector">
+                      {Object.entries(ideologyVector).map(([axis, value]) => (
+                        <div key={axis} className="ideology-axis">
+                          <span>{axis}</span>
+                          <div className="ideology-progress">
+                            <div className="ideology-fill" style={{ width: `${(value + 100) / 2}%` }} />
+                          </div>
+                          <span className="axis-value">{value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="party-opinion-preview">
+                    <div className="opinion-row">
+                      <span className="stat-label">Confiance actuelle</span>
+                      <span className="stat-value">{overallApproval !== null ? `${overallApproval}%` : '—'}</span>
+                    </div>
+                    <div className="segments-group">
+                      <span className="segments-label">Segments favorables</span>
+                      <div className="segments-pills">
+                        {supportiveSegments.filter(Boolean).map(segment => (
+                          <span key={segment.id} className="segment-pill positive">{segment.name}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="segments-group">
+                      <span className="segments-label">À surveiller</span>
+                      <div className="segments-pills">
+                        {criticalSegments.filter(Boolean).map(segment => (
+                          <span key={segment.id} className="segment-pill negative">{segment.name}</span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
           <button
             onClick={() => setIsCreatingNew(true)}
             className="create-party-card"

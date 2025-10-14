@@ -1,13 +1,18 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useCabinetFormationStore } from '../src/store/cabinetFormationStore';
-import { getSeatDistribution } from '../src/utils/seatDistribution';
 import type { GameInitStep } from '../src/types/game';
 import type { PoliticalParty } from '../src/types/party';
 import type { PotentialMinister } from '../src/types/cabinet';
+import type { PartyId } from '../src/types/parliament';
+import { useMasterGame } from '../src/context/MasterGameContext';
+import { PRIME_MINISTER_CANDIDATES } from '../src/data/primeMinisterCandidates';
+import { PRESET_PARTIES } from '../src/store/gameState';
 import { PartySelector } from './PartySelector';
 import { PrimeMinisterSelectorAdvanced } from './PrimeMinisterSelectorAdvanced';
 import { CabinetFormationRealistic } from './CabinetFormationRealistic';
 import { ErrorBoundary } from './ErrorBoundary';
+import { InitialContextScreen } from './InitialContextScreen';
+import { ConfirmationScreen } from './ConfirmationScreen';
 import '../src/styles/InitGameScreenModern.css';
 
 export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
@@ -19,14 +24,40 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
     previousRole: '',
     party: null as PoliticalParty | null
   });
+  const [selectedPrimeMinister, setSelectedPrimeMinister] = useState<PotentialMinister | null>(null);
 
-  const { initializeFormation } = useCabinetFormationStore();
+  const { parliament, opinion, media, ready: enginesReady } = useMasterGame();
+
+  const initializeFormation = useCabinetFormationStore(state => state.initializeFormation);
+  const selectedMinisters = useCabinetFormationStore(state => state.selectedMinisters);
+
+  const selectedPartyId: PartyId | null = playerInfo.party ? (playerInfo.party.parliamentaryId ?? playerInfo.party.id) as PartyId : null;
+  const fallbackSeatDistribution = useMemo(() => {
+    return PRESET_PARTIES.reduce((acc, party) => {
+      const id = party.parliamentaryId ?? party.id;
+      acc[id] = party.seatsInParliament;
+      return acc;
+    }, {} as Record<string, number>);
+  }, []);
+
+  const seatDistribution = useMemo(() => {
+    const groups = parliament?.parliamentaryGroups;
+    if (!groups || Object.keys(groups).length === 0) {
+      return {};
+    }
+
+    return Object.entries(groups).reduce((acc, [partyId, group]) => {
+      acc[partyId] = group.seats;
+      return acc;
+    }, {} as Record<string, number>);
+  }, [parliament?.parliamentaryGroups]);
 
   const steps = [
     { id: 'personal', name: 'Informations' },
     { id: 'party', name: 'Parti' },
     { id: 'prime-minister', name: 'Premier Ministre' },
     { id: 'cabinet', name: 'Gouvernement' },
+    { id: 'context', name: 'Contexte Initial' },
     { id: 'confirmation', name: 'Confirmation' }
   ];
 
@@ -42,14 +73,16 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
 
   const handlePrimeMinisterSelect = (minister: PotentialMinister) => {
     if (playerInfo.party) {
-      const seats = getSeatDistribution();
-      initializeFormation(playerInfo.party.id, seats, minister);
+      const partyId = (playerInfo.party.parliamentaryId ?? playerInfo.party.id) as string;
+      const seats = Object.keys(seatDistribution).length > 0 ? seatDistribution : fallbackSeatDistribution;
+      initializeFormation(partyId, seats, minister);
+      setSelectedPrimeMinister(minister);
       setStep('cabinet');
     }
   };
 
   const handleCabinetComplete = () => {
-    setStep('confirmation');
+    setStep('context');
   };
 
   return (
@@ -149,8 +182,8 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
           )}
 
           {step === 'prime-minister' && playerInfo.party && (
-            <PrimeMinisterSelectorAdvanced 
-              presidentParty={playerInfo.party.id}
+            <PrimeMinisterSelectorAdvanced
+              presidentParty={selectedPartyId ?? playerInfo.party.id}
               onSelect={handlePrimeMinisterSelect}
             />
           )}
@@ -161,14 +194,24 @@ export const InitGameScreen: React.FC<{ onComplete: () => void }> = ({ onComplet
             </ErrorBoundary>
           )}
 
-          {step === 'confirmation' && (
-            <div className="confirmation-section">
-              <h2>Résumé de vos choix</h2>
-              {/* ... affichage du résumé ... */}
-              <button onClick={onComplete} className="btn-start">
-                Commencer le mandat
-              </button>
-            </div>
+          {step === 'context' && playerInfo.party && (
+            <InitialContextScreen
+              playerInfo={playerInfo}
+              selectedParty={playerInfo.party}
+              primeMinister={selectedPrimeMinister}
+              enginesReady={enginesReady}
+              onContinue={() => setStep('confirmation')}
+            />
+          )}
+
+          {step === 'confirmation' && playerInfo.party && (
+            <ConfirmationScreen
+              playerInfo={playerInfo}
+              selectedParty={playerInfo.party}
+              primeMinister={selectedPrimeMinister}
+              cabinetMinisters={selectedMinisters}
+              onConfirm={onComplete}
+            />
           )}
         </div>
       </div>

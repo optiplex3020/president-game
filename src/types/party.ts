@@ -1,5 +1,8 @@
+import type { PartyId } from './parliament';
+
 export type PoliticalParty = {
   id: string;
+  parliamentaryId?: PartyId;
   name: string;
   description: string;
   initialStats: {
@@ -16,6 +19,13 @@ export type PoliticalParty = {
     ecolo: number;
     social: number;
     souverainiste: number;
+  };
+  ideologyVector?: {
+    economicLeft: number;
+    social: number;
+    european: number;
+    environmental: number;
+    authoritarian: number;
   };
   seats?: number;
   support?: number;

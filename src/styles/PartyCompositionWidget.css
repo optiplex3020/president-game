@@ -1,0 +1,123 @@
+.party-composition-widget {
+  background: var(--surface-card, #131722);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.party-composition-widget .widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.party-composition-widget .widget-header h3 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.party-composition-widget .total-seats {
+  font-size: 0.9rem;
+  color: var(--text-subtle, #9aa0b5);
+}
+
+.party-composition-widget .majority-bar {
+  position: relative;
+  height: 6px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.05));
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.party-composition-widget .majority-threshold {
+  position: absolute;
+  top: -18px;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: var(--accent-warning, #fbbf24);
+  white-space: nowrap;
+}
+
+.party-composition-widget .party-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.party-composition-widget .party-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.party-composition-widget .party-item.selected {
+  border: 1px solid rgba(255, 230, 109, 0.45);
+  box-shadow: 0 0 0 1px rgba(255, 230, 109, 0.25);
+}
+
+.party-composition-widget .party-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.party-composition-widget .party-tag {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(255, 230, 109, 0.2);
+  color: var(--accent-warning, #fbbf24);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.party-composition-widget .party-gauge {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.party-composition-widget .party-gauge-fill {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.2));
+  border-radius: 999px;
+}
+
+.party-composition-widget .party-metrics {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  min-width: 80px;
+  font-size: 0.8rem;
+  color: var(--text-subtle, #9aa0b5);
+}
+
+.party-composition-widget .party-seats {
+  font-weight: 600;
+  color: var(--text-primary, #e8ebf5);
+}
+
+.party-composition-widget .majority-note {
+  font-size: 0.85rem;
+  color: var(--text-subtle, #9aa0b5);
+  margin: 0;
+}

@@ -1,4 +1,10 @@
-export type GameInitStep = 'personal' | 'party' | 'prime-minister' | 'cabinet' | 'confirmation';
+export type GameInitStep =
+  | 'personal'
+  | 'party'
+  | 'prime-minister'
+  | 'cabinet'
+  | 'context'
+  | 'confirmation';
 
 // PoliticalParty type moved to src/types/party.ts
 export type { PoliticalParty } from './party';

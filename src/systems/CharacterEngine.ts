@@ -6,6 +6,7 @@ import type {
   CharacterInteraction,
   Secret
 } from '../types/characters';
+import { PRIME_MINISTER_CANDIDATES, createCharacterFromCandidate } from '../data/primeMinisterCandidates';
 
 interface CharacterEngineState {
   characters: Record<string, PoliticalCharacter>;
@@ -42,223 +43,332 @@ function createDefaultRelationship(withCharacterId: string): Relationship {
   };
 }
 
+function createSupportingCharacter(config: {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: PoliticalCharacter['role'];
+  party?: string;
+  currentPosition: string;
+  biography: string;
+  traits: PoliticalCharacter['personality']['traits'];
+  motivations: PoliticalCharacter['personality']['motivations'];
+  ideology: {
+    economic: number;
+    social: number;
+    europe: number;
+    environment: number;
+    immigration: number;
+  };
+}): PoliticalCharacter {
+  return {
+    id: config.id,
+    firstName: config.firstName,
+    lastName: config.lastName,
+    role: config.role,
+    party: config.party,
+    currentPosition: config.currentPosition,
+    age: 55,
+    gender: 'M',
+    birthPlace: 'France',
+    education: ['ENA'],
+    previousPositions: [],
+    personality: {
+      traits: config.traits,
+      motivations: config.motivations,
+      psychology: {
+        intelligence: 80,
+        emotionalStability: 70,
+        charisma: 65,
+        integrity: 70,
+        ambition: 75,
+        courage: 65,
+        patience: 70
+      },
+      values: {
+        honesty: 65,
+        loyalty: 70,
+        compassion: 55,
+        pragmatism: 70
+      }
+    },
+    relationships: {},
+    secrets: [],
+    agenda: {
+      shortTerm: [
+        { goal: 'Influencer les premières décisions', priority: 70, progress: 40 }
+      ],
+      mediumTerm: [
+        { goal: 'Renforcer son camp', priority: 65, progress: 30 }
+      ],
+      longTerm: [
+        { goal: 'Garder une place centrale', priority: 60, ultimateGoal: true }
+      ],
+      activeStrategies: []
+    },
+    skills: {
+      negotiation: 70,
+      rhetoric: 68,
+      strategy: 72,
+      economics: 65,
+      foreign_policy: 60,
+      media: 62,
+      manipulation: 55
+    },
+    resources: {
+      politicalCapital: 70,
+      financialResources: 55,
+      mediaConnections: 60,
+      businessConnections: 65,
+      internationalConnections: 55
+    },
+    currentState: {
+      mood: 'neutral',
+      stress: 45,
+      energy: 65,
+      popularity: 60,
+      powerLevel: 70
+    },
+    politicalViews: {
+      economicPolicy: config.ideology.economic,
+      socialPolicy: config.ideology.social,
+      foreignPolicy: 30,
+      europeanIntegration: config.ideology.europe,
+      environment: config.ideology.environment,
+      immigration: config.ideology.immigration
+    },
+    biography: config.biography,
+    achievements: [
+      { date: new Date(2012, 0, 1), description: 'Carrière politique consolidée', publicImpact: 8 }
+    ],
+    controversies: [],
+    behaviorPatterns: {
+      decisionMaking: 'consultative',
+      conflictResolution: 'diplomatic',
+      communicationStyle: 'direct',
+      loyaltyPattern: 'pragmatic'
+    },
+    reactionRules: []
+  };
+}
+
 export const useCharacterEngine = create<CharacterEngineState>((set, get) => ({
   characters: {},
   interactions: [],
   recentActions: [],
 
   initializeCharacters: () => {
-    // Créer quelques personnages clés
-    const characters: Record<string, PoliticalCharacter> = {
-      'pm_001': {
-        id: 'pm_001',
-        firstName: 'Élisabeth',
-        lastName: 'Borne',
-        role: 'prime_minister',
+    const supportingCharacters = [
+      createSupportingCharacter({
+        id: 'elysee_president',
+        firstName: 'Emmanuel',
+        lastName: 'Macron',
+        role: 'president',
         party: 'renaissance',
-        currentPosition: 'Première ministre',
-        age: 62,
-        gender: 'F',
-        birthPlace: 'Paris',
-        education: ['École Polytechnique', 'École nationale des ponts et chaussées'],
-        previousPositions: ['Ministre de la Transition écologique', 'Ministre des Transports'],
-        personality: {
-          traits: ['technocrate', 'loyal', 'pragmatique', 'discret'],
-          motivations: [
-            { type: 'nation', intensity: 85 },
-            { type: 'stabilite', intensity: 75 },
-            { type: 'reconnaissance', intensity: 60 }
-          ],
-          psychology: {
-            intelligence: 85,
-            emotionalStability: 80,
-            charisma: 55,
-            integrity: 78,
-            ambition: 65,
-            courage: 70,
-            patience: 85
-          },
-          values: {
-            honesty: 75,
-            loyalty: 85,
-            compassion: 65,
-            pragmatism: 90
-          }
-        },
-        relationships: {},
-        secrets: [],
-        agenda: {
-          shortTerm: [
-            { goal: 'Faire passer la réforme des retraites', priority: 95, progress: 60 }
-          ],
-          mediumTerm: [
-            { goal: 'Maintenir la cohésion du gouvernement', priority: 80, progress: 70 }
-          ],
-          longTerm: [
-            { goal: 'Être reconnue comme une PM efficace', priority: 75, ultimateGoal: true }
-          ],
-          activeStrategies: []
-        },
-        skills: {
-          negotiation: 75,
-          rhetoric: 60,
-          strategy: 80,
-          economics: 70,
-          foreign_policy: 55,
-          media: 50,
-          manipulation: 45
-        },
-        resources: {
-          politicalCapital: 75,
-          financialResources: 60,
-          mediaConnections: 50,
-          businessConnections: 70,
-          internationalConnections: 55
-        },
-        currentState: {
-          mood: 'neutral',
-          stress: 65,
-          energy: 70,
-          popularity: 42,
-          powerLevel: 75
-        },
-        politicalViews: {
-          economicPolicy: 25,
-          socialPolicy: 30,
-          foreignPolicy: 40,
-          europeanIntegration: 75,
-          environment: 65,
+        currentPosition: 'Président de la République',
+        biography: "Chef de l’État, arbitre l’orientation stratégique du quinquennat.",
+        traits: ['visionnaire', 'ambitieux', 'pragmatique'],
+        motivations: [
+          { type: 'heritage', intensity: 85 },
+          { type: 'nation', intensity: 80 },
+          { type: 'pouvoir', intensity: 70 }
+        ],
+        ideology: {
+          economic: 40,
+          social: 20,
+          europe: 80,
+          environment: 60,
           immigration: 10
-        },
-        biography: 'Haute fonctionnaire et femme politique française, Première ministre depuis 2022.',
-        achievements: [],
-        controversies: [],
-        behaviorPatterns: {
-          decisionMaking: 'calculated',
-          conflictResolution: 'diplomatic',
-          communicationStyle: 'direct',
-          loyaltyPattern: 'unwavering'
-        },
-        reactionRules: []
-      },
-      'opp_001': {
-        id: 'opp_001',
+        }
+      }),
+      createSupportingCharacter({
+        id: 'opposition_leader_rn',
         firstName: 'Marine',
         lastName: 'Le Pen',
         role: 'opposition_leader',
         party: 'rn',
-        currentPosition: 'Présidente du groupe RN à l\'Assemblée',
-        age: 55,
-        gender: 'F',
-        birthPlace: 'Neuilly-sur-Seine',
-        education: ['Université Paris 2 Panthéon-Assas'],
-        previousPositions: ['Députée européenne', 'Présidente du Front National'],
-        personality: {
-          traits: ['ambitieux', 'populiste', 'charismatique', 'calculateur', 'conflictuel'],
-          motivations: [
-            { type: 'pouvoir', intensity: 90 },
-            { type: 'ideologie', intensity: 85 },
-            { type: 'heritage', intensity: 70 }
-          ],
-          psychology: {
-            intelligence: 75,
-            emotionalStability: 70,
-            charisma: 85,
-            integrity: 60,
-            ambition: 95,
-            courage: 80,
-            patience: 75
-          },
-          values: {
-            honesty: 55,
-            loyalty: 70,
-            compassion: 50,
-            pragmatism: 80
-          }
-        },
-        relationships: {},
-        secrets: [
-          {
-            id: 'secret_mlp_1',
-            type: 'corruption',
-            description: 'Emplois fictifs au Parlement européen',
-            severity: 75,
-            knownBy: ['media_001', 'justice_001'],
-            exposureRisk: 60,
-            consequences: {
-              popularityLoss: 15,
-              politicalCapitalLoss: 25,
-              legalTrouble: true,
-              resignationRisk: 30,
-              affectedRelationships: []
-            }
-          }
+        currentPosition: 'Présidente du groupe RN',
+        biography: "Figure de proue de l’opposition nationaliste.",
+        traits: ['charismatique', 'populiste', 'calculateur'],
+        motivations: [
+          { type: 'pouvoir', intensity: 95 },
+          { type: 'ideologie', intensity: 85 },
+          { type: 'heritage', intensity: 75 }
         ],
-        agenda: {
-          shortTerm: [
-            { goal: 'Bloquer la réforme des retraites', priority: 90, progress: 45 }
-          ],
-          mediumTerm: [
-            { goal: 'Gagner les élections européennes', priority: 85, progress: 30 }
-          ],
-          longTerm: [
-            { goal: 'Devenir présidente de la République', priority: 100, ultimateGoal: true }
-          ],
-          activeStrategies: [
-            {
-              name: 'Dédiabolisation du parti',
-              target: 'public',
-              approach: 'seduction',
-              effectiveness: 65
-            }
-          ]
-        },
-        skills: {
-          negotiation: 70,
-          rhetoric: 85,
-          strategy: 80,
-          economics: 60,
-          foreign_policy: 65,
-          media: 90,
-          manipulation: 75
-        },
-        resources: {
-          politicalCapital: 80,
-          financialResources: 55,
-          mediaConnections: 75,
-          businessConnections: 50,
-          internationalConnections: 45
-        },
-        currentState: {
-          mood: 'happy',
-          stress: 55,
-          energy: 80,
-          popularity: 58,
-          powerLevel: 65
-        },
-        politicalViews: {
-          economicPolicy: -20,
-          socialPolicy: -75,
-          foreignPolicy: -60,
-          europeanIntegration: -85,
+        ideology: {
+          economic: -20,
+          social: -70,
+          europe: -80,
+          environment: 20,
+          immigration: -85
+        }
+      }),
+      createSupportingCharacter({
+        id: 'assembly_center_right',
+        firstName: 'Olivier',
+        lastName: 'Marleix',
+        role: 'party_leader',
+        party: 'lr',
+        currentPosition: 'Chef de file LR à l’Assemblée',
+        biography: 'Porte la voix des députés Les Républicains.',
+        traits: ['pragmatique', 'conservateur', 'strategique'],
+        motivations: [
+          { type: 'parti', intensity: 85 },
+          { type: 'stabilite', intensity: 65 },
+          { type: 'pouvoir', intensity: 55 }
+        ],
+        ideology: {
+          economic: 55,
+          social: -40,
+          europe: 35,
+          environment: 40,
+          immigration: -30
+        }
+      }),
+      createSupportingCharacter({
+        id: 'lr_group',
+        firstName: 'Aurélien',
+        lastName: 'Pradié',
+        role: 'party_leader',
+        party: 'lr',
+        currentPosition: 'Voix influente LR',
+        biography: 'Incarnation de la frange modérée et sociale de LR.',
+        traits: ['ambitieux', 'pragmatique', 'loyal'],
+        motivations: [
+          { type: 'parti', intensity: 70 },
+          { type: 'nation', intensity: 60 },
+          { type: 'heritage', intensity: 55 }
+        ],
+        ideology: {
+          economic: 45,
+          social: -20,
+          europe: 40,
+          environment: 45,
+          immigration: -25
+        }
+      }),
+      createSupportingCharacter({
+        id: 'business_lobby',
+        firstName: 'Geoffroy',
+        lastName: 'Roux de Bézieux',
+        role: 'business_leader',
+        currentPosition: 'Président d’organisation patronale',
+        biography: 'Influence majeure auprès des milieux économiques.',
+        traits: ['pragmatique', 'visionnaire', 'strategique'],
+        motivations: [
+          { type: 'richesse', intensity: 80 },
+          { type: 'pouvoir', intensity: 65 },
+          { type: 'parti', intensity: 45 }
+        ],
+        ideology: {
+          economic: 70,
+          social: -10,
+          europe: 65,
+          environment: 35,
+          immigration: -10
+        }
+      }),
+      createSupportingCharacter({
+        id: 'security_unions',
+        firstName: 'Yves',
+        lastName: 'Lefebvre',
+        role: 'union_leader',
+        currentPosition: 'Secrétaire général syndicat police majoritaire',
+        biography: 'Interlocuteur incontournable des forces de l’ordre.',
+        traits: ['conflictuel', 'loyal', 'pragmatique'],
+        motivations: [
+          { type: 'justice', intensity: 75 },
+          { type: 'stabilite', intensity: 70 },
+          { type: 'parti', intensity: 50 }
+        ],
+        ideology: {
+          economic: 10,
+          social: -40,
+          europe: 10,
+          environment: 20,
+          immigration: -50
+        }
+      }),
+      createSupportingCharacter({
+        id: 'defense_industry',
+        firstName: 'Éric',
+        lastName: 'Trappier',
+        role: 'business_leader',
+        currentPosition: 'PDG industrie défense',
+        biography: 'Intervient sur les enjeux militaires et industriels.',
+        traits: ['strategique', 'pragmatique', 'ambitieux'],
+        motivations: [
+          { type: 'richesse', intensity: 75 },
+          { type: 'nation', intensity: 60 },
+          { type: 'heritage', intensity: 55 }
+        ],
+        ideology: {
+          economic: 65,
+          social: -15,
+          europe: 55,
           environment: 30,
-          immigration: -90
-        },
-        biography: 'Femme politique française, figure de l\'extrême droite, candidate à l\'élection présidentielle.',
-        achievements: [],
-        controversies: [],
-        behaviorPatterns: {
-          decisionMaking: 'calculated',
-          conflictResolution: 'aggressive',
-          communicationStyle: 'direct',
-          loyaltyPattern: 'pragmatic'
-        },
-        reactionRules: []
-      }
-    };
+          immigration: -20
+        }
+      })
+    ];
 
-    set({ characters });
+    const candidateCharacters = PRIME_MINISTER_CANDIDATES.map(createCharacterFromCandidate);
+
+    const characters: Record<string, PoliticalCharacter> = {};
+
+    supportingCharacters.forEach(character => {
+      characters[character.id] = character;
+    });
+
+    candidateCharacters.forEach(candidate => {
+      characters[candidate.id] = {
+        ...candidate,
+        relationships: {
+          ...candidate.relationships,
+          ...Object.fromEntries(
+            Object.keys(characters).map(id => [
+              id,
+              candidate.relationships[id] ?? createDefaultRelationship(id)
+            ])
+          )
+        }
+      };
+    });
+
+    Object.values(characters).forEach(character => {
+      Object.keys(characters).forEach(otherId => {
+        if (character.id === otherId) return;
+
+        if (!character.relationships[otherId]) {
+          character.relationships[otherId] = createDefaultRelationship(otherId);
+        }
+      });
+    });
+
+    candidateCharacters.forEach(candidate => {
+      Object.entries(candidate.relationships).forEach(([targetId, relation]) => {
+        const target = characters[targetId];
+        if (!target) return;
+
+        target.relationships[candidate.id] = {
+          ...target.relationships[candidate.id],
+          withCharacterId: candidate.id,
+          type: relation.type,
+          strength: Math.min(90, Math.max(30, relation.strength)),
+          sentiment: Math.max(-90, Math.min(90, relation.sentiment)),
+          trust: Math.max(10, Math.min(90, relation.sentiment + 50)),
+          history: target.relationships[candidate.id]?.history ?? [],
+          owedFavors: target.relationships[candidate.id]?.owedFavors ?? 0,
+          receivedFavors: target.relationships[candidate.id]?.receivedFavors ?? 0,
+          sharedSecrets: target.relationships[candidate.id]?.sharedSecrets ?? [],
+          publicKnowledge: true
+        };
+      });
+    });
+
+    set({ characters, interactions: [], recentActions: [] });
   },
+
 
   addCharacter: (character: PoliticalCharacter) => {
     set(state => ({

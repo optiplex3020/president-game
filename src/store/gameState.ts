@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import eventsData from '../../data/events.json';
 import type { PotentialMinister } from '../types/cabinet';
 import { CABINET_ROLES } from '../types/cabinet';
@@ -22,6 +23,14 @@ export type GameEvent = {
 export const PRESET_PARTIES: PoliticalParty[] = [
   {
     id: "renaissance",
+    parliamentaryId: 'renaissance',
+    ideologyVector: {
+      economicLeft: 15,
+      social: 40,
+      european: 80,
+      environmental: 60,
+      authoritarian: 20
+    },
     name: "Renaissance",
     description: "Parti centriste et libéral européen",
     initialStats: {
@@ -46,6 +55,14 @@ export const PRESET_PARTIES: PoliticalParty[] = [
   },
   {
     id: "lr",
+    parliamentaryId: 'lr',
+    ideologyVector: {
+      economicLeft: 60,
+      social: -40,
+      european: 40,
+      environmental: 30,
+      authoritarian: 50
+    },
     name: "Les Républicains",
     description: "Droite traditionnelle conservatrice",
     initialStats: {
@@ -69,6 +86,14 @@ export const PRESET_PARTIES: PoliticalParty[] = [
   },
   {
     id: "rn",
+    parliamentaryId: 'rn',
+    ideologyVector: {
+      economicLeft: -10,
+      social: -60,
+      european: -80,
+      environmental: 20,
+      authoritarian: 70
+    },
     name: "Rassemblement National",
     description: "Parti nationaliste et souverainiste",
     initialStats: {
@@ -93,6 +118,14 @@ export const PRESET_PARTIES: PoliticalParty[] = [
   },
   {
     id: "lfi",
+    parliamentaryId: 'lfi',
+    ideologyVector: {
+      economicLeft: -80,
+      social: 70,
+      european: -40,
+      environmental: 75,
+      authoritarian: -30
+    },
     name: "La France Insoumise",
     description: "Gauche radicale et populiste",
     initialStats: {
@@ -117,6 +150,14 @@ export const PRESET_PARTIES: PoliticalParty[] = [
   },
   {
     id: "ps",
+    parliamentaryId: 'ps',
+    ideologyVector: {
+      economicLeft: -50,
+      social: 60,
+      european: 70,
+      environmental: 65,
+      authoritarian: -10
+    },
     name: "Parti Socialiste",
     description: "Social-démocratie en recomposition",
     initialStats: {
@@ -141,6 +182,14 @@ export const PRESET_PARTIES: PoliticalParty[] = [
   },
   {
     id: "reconquete",
+    parliamentaryId: 'divers_droite',
+    ideologyVector: {
+      economicLeft: 40,
+      social: -70,
+      european: -60,
+      environmental: 20,
+      authoritarian: 80
+    },
     name: "Reconquête",
     description: "Droite identitaire et conservatrice",
     initialStats: {
@@ -165,6 +214,14 @@ export const PRESET_PARTIES: PoliticalParty[] = [
   },
   {
     id: "eelv",
+    parliamentaryId: 'ecologistes',
+    ideologyVector: {
+      economicLeft: -40,
+      social: 65,
+      european: 75,
+      environmental: 95,
+      authoritarian: -20
+    },
     name: "Europe Écologie Les Verts",
     description: "Écologie politique et sociale",
     initialStats: {
@@ -189,6 +246,14 @@ export const PRESET_PARTIES: PoliticalParty[] = [
   },
   {
     id: "modem",
+    parliamentaryId: 'modem',
+    ideologyVector: {
+      economicLeft: 10,
+      social: 45,
+      european: 85,
+      environmental: 60,
+      authoritarian: 10
+    },
     name: "Mouvement Démocrate",
     description: "Centre pro-européen et modéré",
     initialStats: {
@@ -212,6 +277,14 @@ export const PRESET_PARTIES: PoliticalParty[] = [
   },
   {
     id: "nfp",
+    parliamentaryId: 'divers_gauche',
+    ideologyVector: {
+      economicLeft: -65,
+      social: 70,
+      european: 55,
+      environmental: 70,
+      authoritarian: -25
+    },
     name: "Nouveau Front Populaire",
     description: "Coalition de gauche unie",
     initialStats: {
@@ -236,6 +309,14 @@ export const PRESET_PARTIES: PoliticalParty[] = [
   },
   {
     id: "lapres",
+    parliamentaryId: 'divers_gauche',
+    ideologyVector: {
+      economicLeft: -60,
+      social: 65,
+      european: 50,
+      environmental: 80,
+      authoritarian: -30
+    },
     name: "L'Après",
     description: "Mouvement écosocialiste post-LFI",
     initialStats: {
@@ -302,7 +383,9 @@ type GameState = {
   initializeGame: () => void;
 };
 
-export const useGameState = create<GameState>((set, get) => ({
+export const useGameState = create<GameState>()(
+  persist(
+    (set, get) => ({
   // Initialisation des indicateurs
   playerStats: {
     popularity: 50,
@@ -509,7 +592,13 @@ export const useGameState = create<GameState>((set, get) => ({
 
   gameStarted: false,
   initializeGame: () => set({ gameStarted: true }),
-}));
+}),
+    {
+      name: 'president-game-state',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
 
 // Supprimez ou utilisez useCrisisSystem si nécessaire
 // const useCrisisSystem = ...

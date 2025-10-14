@@ -4,6 +4,7 @@
  */
 
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { useParliamentEngine } from './ParliamentEngine';
 import { useOpinionEngine } from './OpinionEngine';
 import { useCharacterEngine } from './CharacterEngine';
@@ -18,11 +19,11 @@ interface MasterGameState {
   timeScale: number; // Vitesse du jeu (1 = normal, 2 = rapide, etc.)
 
   // Managers de sous-systèmes
-  parliament: typeof useParliamentEngine extends create<infer T> ? T : never;
-  opinion: typeof useOpinionEngine extends create<infer T> ? T : never;
-  characters: typeof useCharacterEngine extends create<infer T> ? T : never;
-  media: typeof useMediaEngine extends create<infer T> ? T : never;
-  basic: typeof useBasicGameEngine extends create<infer T> ? T : never;
+  parliament: ReturnType<typeof useParliamentEngine>;
+  opinion: ReturnType<typeof useOpinionEngine>;
+  characters: ReturnType<typeof useCharacterEngine>;
+  media: ReturnType<typeof useMediaEngine>;
+  basic: ReturnType<typeof useBasicGameEngine>;
 
   // Actions globales
   initializeGame: () => void;
@@ -41,7 +42,9 @@ interface MasterGameState {
   };
 }
 
-export const useMasterGameEngine = create<MasterGameState>((set, get) => ({
+export const useMasterGameEngine = create<MasterGameState>()(
+  persist(
+    (set, get) => ({
   initialized: false,
   currentDate: new Date(),
   dayInMandate: 1,
@@ -190,4 +193,16 @@ export const useMasterGameEngine = create<MasterGameState>((set, get) => ({
       internationalStanding: basic.gameState.indicators.international.europeanInfluence
     };
   }
-}));
+}),
+    {
+      name: 'president-game-master',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        initialized: state.initialized,
+        currentDate: state.currentDate,
+        dayInMandate: state.dayInMandate,
+        timeScale: state.timeScale
+      })
+    }
+  )
+);
