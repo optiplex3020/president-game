@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useGameEngine } from '../src/systems/GameEngine';
 import { InteractiveGameSystem } from './InteractiveGameSystem';
 import { SaveGameMenu } from './SaveGameMenu';
+import { DynamicMediaFeed } from './DynamicMediaFeed';
+import { LawProposalInterface } from './LawProposalInterface';
+import { DeputyNegotiationInterface } from './DeputyNegotiationInterface';
+import { OpinionManagementInterface } from './OpinionManagementInterface';
 import { useAutoSave } from '../src/hooks/useAutoSave';
 import '../src/styles/PresidentialDashboard.css';
 
@@ -32,7 +36,7 @@ export const PresidentialDashboard: React.FC = () => {
   const { gameState, advanceTime, pendingDecisions } = useGameEngine();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedDate] = useState(new Date());
-  const [activeTab, setActiveTab] = useState<'overview' | 'agenda' | 'decisions' | 'intelligence' | 'events'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'agenda' | 'decisions' | 'intelligence' | 'events' | 'parliament' | 'deputies' | 'opinion'>('overview');
   const [newsFilter, setNewsFilter] = useState<'all' | 'politics' | 'economy' | 'social' | 'international'>('all');
   const [showSaveMenu, setShowSaveMenu] = useState(false);
 
@@ -282,9 +286,12 @@ export const PresidentialDashboard: React.FC = () => {
         <div className="nav-tabs">
           {[
             { id: 'overview', label: 'Vue d\'ensemble', icon: '🏛️' },
+            { id: 'parliament', label: 'Parlement', icon: '⚖️' },
+            { id: 'deputies', label: 'Négociations', icon: '🤝' },
+            { id: 'opinion', label: 'Opinion publique', icon: '📊' },
             { id: 'events', label: 'Événements politiques', icon: '⚡' },
             { id: 'agenda', label: 'Agenda présidentiel', icon: '📅' },
-            { id: 'decisions', label: 'Décisions en attente', icon: '⚖️' },
+            { id: 'decisions', label: 'Décisions en attente', icon: '📋' },
             { id: 'intelligence', label: 'Renseignement', icon: '🕵️' }
           ].map(tab => (
             <button
@@ -301,6 +308,18 @@ export const PresidentialDashboard: React.FC = () => {
 
       {/* Contenu principal */}
       <main className="dashboard-content">
+        {activeTab === 'parliament' && (
+          <LawProposalInterface />
+        )}
+
+        {activeTab === 'deputies' && (
+          <DeputyNegotiationInterface />
+        )}
+
+        {activeTab === 'opinion' && (
+          <OpinionManagementInterface />
+        )}
+
         {activeTab === 'events' && (
           <InteractiveGameSystem onDecision={handleEventDecision} />
         )}
@@ -341,60 +360,9 @@ export const PresidentialDashboard: React.FC = () => {
               </div>
             </section>
 
-            {/* Actualités et médias */}
+            {/* Flux médiatique dynamique */}
             <section className="news-intelligence">
-              <div className="section-header">
-                <h2>Veille médiatique</h2>
-                <div className="news-filters">
-                  {['all', 'politics', 'economy', 'social', 'international'].map(filter => (
-                    <button
-                      key={filter}
-                      onClick={() => setNewsFilter(filter as any)}
-                      className={`filter-btn ${newsFilter === filter ? 'active' : ''}`}
-                    >
-                      {filter === 'all' ? 'Tout' : 
-                       filter === 'politics' ? 'Politique' :
-                       filter === 'economy' ? 'Économie' :
-                       filter === 'social' ? 'Social' : 'International'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="news-grid">
-                {filteredNews.map(news => (
-                  <article key={news.id} className={`news-card ${news.impact}`}>
-                    <div className="news-header">
-                      <div className="news-source">{news.source}</div>
-                      <div className="news-time">{news.time}</div>
-                      <div className={`news-impact ${news.impact}`}>
-                        {news.impact === 'positive' && '📈'}
-                        {news.impact === 'negative' && '📉'}
-                        {news.impact === 'neutral' && '📊'}
-                      </div>
-                    </div>
-                    <h3 className="news-title">{news.title}</h3>
-                    <p className="news-summary">{news.summary}</p>
-                    <div className="news-actions">
-                      <button 
-                        className="btn-secondary"
-                        onClick={() => alert(`Impact analysé: ${news.impact === 'positive' ? 'Favorable' : news.impact === 'negative' ? 'Défavorable' : 'Neutre'} pour votre popularité`)}
-                      >
-                        Analyser l'impact
-                      </button>
-                      <button 
-                        className="btn-primary"
-                        onClick={() => {
-                          alert('Équipe de communication mobilisée pour préparer une réponse officielle.');
-                          advanceTime(2);
-                        }}
-                      >
-                        Préparer réponse
-                      </button>
-                    </div>
-                  </article>
-                ))}
-              </div>
+              <DynamicMediaFeed />
             </section>
 
             {/* Tableau de bord indicateurs */}

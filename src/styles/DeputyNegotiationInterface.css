@@ -1,0 +1,603 @@
+.deputy-negotiation-interface {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.negotiation-result {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  max-width: 500px;
+  text-align: center;
+}
+
+.negotiation-result::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+.negotiation-result.success {
+  border: 3px solid #22c55e;
+}
+
+.negotiation-result.failure {
+  border: 3px solid #ef4444;
+}
+
+.negotiation-result p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.negotiation-result button {
+  padding: 0.75rem 2rem;
+  background: #1e40af;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.negotiation-result button:hover {
+  background: #1e3a8a;
+  transform: translateY(-2px);
+}
+
+.negotiation-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  height: 100%;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+/* Panel commun */
+.deputies-panel,
+.deputy-details-panel,
+.negotiation-panel {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(30, 58, 138, 0.2);
+}
+
+.panel-header h3 {
+  margin: 0;
+  color: #f1f5f9;
+  font-size: 1.5rem;
+}
+
+.panel-subtitle {
+  margin: 0.5rem 0 0 0;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Liste des députés */
+.deputies-filters {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.search-input,
+.party-filter {
+  padding: 0.75rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+}
+
+.search-input::placeholder {
+  color: #64748b;
+}
+
+.deputies-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.deputy-card {
+  padding: 1rem;
+  background: rgba(30, 41, 59, 0.6);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deputy-card:hover {
+  background: rgba(30, 58, 138, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateX(4px);
+}
+
+.deputy-card.selected {
+  background: rgba(30, 58, 138, 0.4);
+  border-color: #3b82f6;
+}
+
+.deputy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.deputy-name strong {
+  display: block;
+  color: #f1f5f9;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.deputy-party {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.deputy-influence {
+  color: #fbbf24;
+  font-size: 0.9rem;
+}
+
+.deputy-influence strong {
+  font-size: 1.1rem;
+}
+
+.deputy-stats-mini {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.deputy-stats-mini span.relation {
+  font-weight: 600;
+}
+
+.deputy-stats-mini span.relation.positive {
+  color: #22c55e;
+}
+
+.deputy-stats-mini span.relation.negative {
+  color: #ef4444;
+}
+
+.deputy-stats-mini span.relation.neutral {
+  color: #94a3b8;
+}
+
+/* Détails du député */
+.deputy-details-panel {
+  padding: 0;
+}
+
+.deputy-info {
+  margin: 0.5rem 0 0 0;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.deputy-stats {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-row > span:first-child,
+.relation-label {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.relation-label.positive {
+  color: #22c55e;
+}
+
+.relation-label.negative {
+  color: #ef4444;
+}
+
+.stat-bar {
+  position: relative;
+  height: 24px;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.stat-fill.positive {
+  background: linear-gradient(90deg, #22c55e 0%, #4ade80 100%);
+}
+
+.stat-fill.negative {
+  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+}
+
+.stat-fill.neutral {
+  background: linear-gradient(90deg, #64748b 0%, #94a3b8 100%);
+}
+
+.stat-fill.ambition {
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+}
+
+.stat-fill.integrity {
+  background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
+}
+
+.stat-fill.loyalty {
+  background: linear-gradient(90deg, #ec4899 0%, #f472b6 100%);
+}
+
+.stat-value {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.deputy-traits,
+.deputy-ideology {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.deputy-traits h4,
+.deputy-ideology h4 {
+  margin: 0 0 1rem 0;
+  color: #f1f5f9;
+  font-size: 1rem;
+}
+
+.traits-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.trait-badge {
+  padding: 0.4rem 0.8rem;
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 6px;
+  color: #93c5fd;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.ideology-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ideology-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+.ideology-value {
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.no-selection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Panel de négociation */
+.negotiation-panel {
+  padding: 0;
+}
+
+.negotiation-panel .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.negotiation-panel .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.negotiation-panel > *:not(.panel-header) {
+  padding: 0 1.5rem;
+}
+
+.negotiation-panel > div:last-child {
+  padding-bottom: 1.5rem;
+}
+
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.vote-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.vote-btn {
+  padding: 0.75rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  border-radius: 8px;
+  color: #cbd5e1;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.vote-btn:hover {
+  background: rgba(30, 58, 138, 0.4);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.vote-btn.active {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: #3b82f6;
+  color: #93c5fd;
+}
+
+.vote-btn.pour.active {
+  background: rgba(34, 197, 94, 0.3);
+  border-color: #22c55e;
+  color: #86efac;
+}
+
+.vote-btn.contre.active {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+.vote-btn.abstention.active {
+  background: rgba(148, 163, 184, 0.3);
+  border-color: #94a3b8;
+  color: #cbd5e1;
+}
+
+.value-indicator {
+  float: right;
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.value-slider {
+  width: 100%;
+  height: 8px;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 4px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.value-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.value-slider::-webkit-slider-thumb:hover {
+  background: #60a5fa;
+  transform: scale(1.1);
+}
+
+.value-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.value-slider::-moz-range-thumb:hover {
+  background: #60a5fa;
+  transform: scale(1.1);
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.probability-display {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 8px;
+}
+
+.probability-label {
+  margin-bottom: 0.75rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  text-align: center;
+}
+
+.probability-bar {
+  height: 32px;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.probability-fill {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.probability-fill.high {
+  background: linear-gradient(90deg, #22c55e 0%, #4ade80 100%);
+}
+
+.probability-fill.medium {
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+}
+
+.probability-fill.low {
+  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+}
+
+.probability-value {
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.btn-negotiate {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.btn-negotiate:hover:not(:disabled) {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn-negotiate:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Scrollbar styling */
+.deputies-list::-webkit-scrollbar,
+.deputy-stats::-webkit-scrollbar {
+  width: 8px;
+}
+
+.deputies-list::-webkit-scrollbar-track,
+.deputy-stats::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 4px;
+}
+
+.deputies-list::-webkit-scrollbar-thumb,
+.deputy-stats::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.4);
+  border-radius: 4px;
+}
+
+.deputies-list::-webkit-scrollbar-thumb:hover,
+.deputy-stats::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.6);
+}

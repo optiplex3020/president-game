@@ -6,6 +6,7 @@ import { PRIME_MINISTER_CANDIDATES } from '../src/data/primeMinisterCandidates';
 import { useMasterGame } from '../src/context/MasterGameContext';
 import { PartyCompositionWidget } from './PartyCompositionWidget';
 import { OpinionPreview } from './OpinionPreview';
+import { InitialMediaHeadlines } from './InitialMediaHeadlines';
 import '../src/styles/InitialContextScreen.css';
 
 interface InitialContextScreenProps {
@@ -121,6 +122,11 @@ export const InitialContextScreen: React.FC<InitialContextScreenProps> = ({
         <section className="opinion-section">
           <OpinionPreview />
         </section>
+
+        <InitialMediaHeadlines
+          playerInfo={playerInfo}
+          selectedParty={selectedParty}
+        />
 
         <section className="media-agenda-section">
           <h3>Agenda médiatique immédiat</h3>
