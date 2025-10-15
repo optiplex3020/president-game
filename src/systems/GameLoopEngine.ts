@@ -9,6 +9,7 @@ import { useOpinionEngine } from './OpinionEngine';
 import { useMediaEngine } from './MediaEngine';
 import { useMasterGameEngine } from './MasterGameEngine';
 import { useCalendarEngine } from './CalendarEngine';
+import { useNotificationEngine } from './NotificationEngine';
 import type { CalendarEventCategory } from './CalendarEngine';
 import type { GameEvent } from '../types/events';
 import { getRandomEvent } from '../data/eventBank';
@@ -464,6 +465,23 @@ export const useGameLoopEngine = create<GameLoopState>((set, get) => ({
     }));
 
     console.log(`📢 Événement déclenché: ${event.title}`);
+
+    // Notification de l'événement
+    const notifications = useNotificationEngine.getState();
+    const severityType = event.severity >= 80 ? 'danger' : event.severity >= 60 ? 'warning' : 'info';
+
+    notifications.notify({
+      type: severityType,
+      title: `📢 ${event.title}`,
+      message: event.description,
+      icon: event.severity >= 80 ? '🚨' : event.severity >= 60 ? '⚠️' : '📰',
+      duration: 8000,
+      metadata: {
+        category: event.category,
+        relatedEventId: event.id
+      }
+    });
+
     return event;
   },
 
@@ -490,12 +508,18 @@ export const useGameLoopEngine = create<GameLoopState>((set, get) => ({
           const opinion = useOpinionEngine.getState();
           const media = useMediaEngine.getState();
           const parliament = useParliamentEngine.getState();
+          const notifications = useNotificationEngine.getState();
 
           switch (consequence.type) {
             case 'opinion':
               // Simuler une baisse d'opinion
-              // TODO: Adapter à la vraie interface OpinionEvent
               console.log(`⚡ Conséquence opinion: ${consequence.description} (severity: ${consequence.severity})`);
+
+              notifications.notifyOpinionChange(
+                'Opinion générale',
+                -Math.round(consequence.severity / 5),
+                consequence.description
+              );
               break;
 
             case 'media':
@@ -506,6 +530,12 @@ export const useGameLoopEngine = create<GameLoopState>((set, get) => ({
                   sentiment: -consequence.severity
                 });
               }
+
+              notifications.notifyMediaArticle(
+                'Presse',
+                consequence.description,
+                -consequence.severity
+              );
               break;
 
             case 'parliament':
@@ -516,6 +546,32 @@ export const useGameLoopEngine = create<GameLoopState>((set, get) => ({
                   relationshipChange: -consequence.severity / 5,
                   message: consequence.description
                 });
+              });
+
+              notifications.notify({
+                type: 'parliament',
+                title: 'Impact parlementaire',
+                message: consequence.description,
+                icon: '⚖️',
+                duration: 6000
+              });
+              break;
+
+            case 'economy':
+              notifications.notifyEconomicChange(
+                'Impact économique',
+                -Math.round(consequence.severity / 10),
+                consequence.description
+              );
+              break;
+
+            case 'international':
+              notifications.notify({
+                type: 'diplomatic',
+                title: 'Relations internationales',
+                message: consequence.description,
+                icon: '🌍',
+                duration: 6000
               });
               break;
           }
