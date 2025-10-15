@@ -1,0 +1,167 @@
+.time-control-panel {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Affichage de la date */
+.time-display {
+  flex: 1;
+}
+
+.current-date {
+  color: #f1f5f9;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.mandate-info {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.mandate-day {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.mandate-progress {
+  color: #64748b;
+}
+
+/* Contrôles de vitesse */
+.time-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.time-btn {
+  width: 48px;
+  height: 48px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  border-radius: 8px;
+  color: #cbd5e1;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.time-btn:hover {
+  background: rgba(30, 58, 138, 0.4);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+.time-btn.active {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.time-scale-indicator {
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  min-width: 140px;
+  text-align: center;
+  border: 2px solid;
+  transition: all 0.2s;
+}
+
+.time-scale-indicator.gray {
+  background: rgba(100, 116, 139, 0.2);
+  border-color: rgba(100, 116, 139, 0.4);
+  color: #94a3b8;
+}
+
+.time-scale-indicator.blue {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #93c5fd;
+}
+
+.time-scale-indicator.green {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #86efac;
+}
+
+.time-scale-indicator.orange {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: rgba(251, 191, 36, 0.4);
+  color: #fcd34d;
+}
+
+.time-scale-indicator.red {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Statistiques */
+.game-stats {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+}
+
+.stat-value {
+  color: #f1f5f9;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.stat-label {
+  color: #64748b;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .time-control-panel {
+    flex-wrap: wrap;
+  }
+
+  .time-display {
+    flex: 1 1 100%;
+    margin-bottom: 1rem;
+  }
+}

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { GameState, GameEvent, Decision, DecisionConsequence, Effects } from '../types/game';
+import { clampDayInMandate, DEFAULT_START_DATE, DAYS_PER_MANDATE } from '../config/time';
 
 // Simple générateur local d'événements dynamiques pour éviter les dépendances cassées
 function generateDynamicEvent(ctx: {
@@ -63,12 +64,12 @@ interface GameEngineState {
 
 // État initial du jeu
 const initialGameState: GameState = {
-  currentDate: new Date(),
+  currentDate: DEFAULT_START_DATE,
   dayInMandate: 1,
   mandate: {
     phase: 'honeymoon' as const,
-    timeRemaining: 1825, // 5 ans en jours
-    totalDays: 1825
+    timeRemaining: DAYS_PER_MANDATE - 1,
+    totalDays: DAYS_PER_MANDATE
   },
   indicators: {
     popularity: {
@@ -125,9 +126,7 @@ export const useGameEngine = create<GameEngineState>((set, get) => ({
     const newDate = new Date(gameState.currentDate);
     newDate.setHours(newDate.getHours() + hours);
     
-    const newDayInMandate = Math.floor(
-      (newDate.getTime() - new Date('2024-05-01').getTime()) / (24 * 60 * 60 * 1000)
-    ) + 1;
+    const newDayInMandate = clampDayInMandate(DEFAULT_START_DATE, newDate);
 
     // Déterminer la phase du mandat
     let phase: 'honeymoon' | 'governing' | 'midterm' | 'campaign' = 'honeymoon';
@@ -181,7 +180,7 @@ export const useGameEngine = create<GameEngineState>((set, get) => ({
         mandate: {
           ...gameState.mandate,
           phase,
-          timeRemaining: gameState.mandate.totalDays - newDayInMandate
+          timeRemaining: Math.max(0, gameState.mandate.totalDays - newDayInMandate)
         },
         indicators: {
           ...gameState.indicators,

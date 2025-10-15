@@ -6,6 +6,9 @@ import { DynamicMediaFeed } from './DynamicMediaFeed';
 import { LawProposalInterface } from './LawProposalInterface';
 import { DeputyNegotiationInterface } from './DeputyNegotiationInterface';
 import { OpinionManagementInterface } from './OpinionManagementInterface';
+import { TimeControlPanel } from './TimeControlPanel';
+import { ActiveEventsPanel } from './ActiveEventsPanel';
+import { LegacyPanel } from './LegacyPanel';
 import { useAutoSave } from '../src/hooks/useAutoSave';
 import '../src/styles/PresidentialDashboard.css';
 
@@ -36,7 +39,7 @@ export const PresidentialDashboard: React.FC = () => {
   const { gameState, advanceTime, pendingDecisions } = useGameEngine();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedDate] = useState(new Date());
-  const [activeTab, setActiveTab] = useState<'overview' | 'agenda' | 'decisions' | 'intelligence' | 'events' | 'parliament' | 'deputies' | 'opinion'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'agenda' | 'decisions' | 'intelligence' | 'events' | 'parliament' | 'deputies' | 'opinion' | 'legacy'>('overview');
   const [newsFilter, setNewsFilter] = useState<'all' | 'politics' | 'economy' | 'social' | 'international'>('all');
   const [showSaveMenu, setShowSaveMenu] = useState(false);
 
@@ -281,6 +284,11 @@ export const PresidentialDashboard: React.FC = () => {
         </div>
       </header>
 
+      {/* Panneau de contrôle du temps */}
+      <div style={{ padding: '0 1.5rem', marginTop: '1rem' }}>
+        <TimeControlPanel />
+      </div>
+
       {/* Navigation par onglets */}
       <nav className="dashboard-nav">
         <div className="nav-tabs">
@@ -290,6 +298,7 @@ export const PresidentialDashboard: React.FC = () => {
             { id: 'deputies', label: 'Négociations', icon: '🤝' },
             { id: 'opinion', label: 'Opinion publique', icon: '📊' },
             { id: 'events', label: 'Événements politiques', icon: '⚡' },
+            { id: 'legacy', label: 'Héritage présidentiel', icon: '🏆' },
             { id: 'agenda', label: 'Agenda présidentiel', icon: '📅' },
             { id: 'decisions', label: 'Décisions en attente', icon: '📋' },
             { id: 'intelligence', label: 'Renseignement', icon: '🕵️' }
@@ -321,7 +330,14 @@ export const PresidentialDashboard: React.FC = () => {
         )}
 
         {activeTab === 'events' && (
-          <InteractiveGameSystem onDecision={handleEventDecision} />
+          <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1rem' }}>
+            <ActiveEventsPanel />
+            <InteractiveGameSystem onDecision={handleEventDecision} />
+          </div>
+        )}
+
+        {activeTab === 'legacy' && (
+          <LegacyPanel />
         )}
 
         {activeTab === 'overview' && (
